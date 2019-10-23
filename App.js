@@ -1,50 +1,26 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-import AppHeader from './components/AppHeader'
+import React from 'react';
+import HomeScreen from './components/HomeScreen'
 import SignUpForm from './components/SignUpForm'
+import LogInForm from './components/LogInForm'
+
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 
-const client = new ApolloClient({
-    link: new HttpLink({
-        uri: 'https://api.st-retrospect.dh-center.ru/graphql',
-        headers: {
-            "accept-language": "ru"
+const AppStack = createStackNavigator({ Home: HomeScreen });
+const AuthStack = createStackNavigator({ SignUp: SignUpForm, LogIn: LogInForm });
+
+const App = createAppContainer(
+    createSwitchNavigator(
+        {
+            App: AppStack,
+            Auth: AuthStack,
+        },
+        {
+            initialRouteName: 'Auth',
         }
-    }),
-    cache: new InMemoryCache()
-});
+    )
+);
 
-export default class App extends Component {
-    render() {
-        return (
-            <ApolloProvider client={client}>
 
-                {/*<View style={styles.container}>*/}
-                    {/*<AppHeader/>*/}
-                    <SignUpForm/>
-                {/*</View>*/}
-            </ApolloProvider>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5
-    }
-});
+export default App;

@@ -4,11 +4,12 @@ import {Container, Content, Form, Item, Input, Button, Header} from 'native-base
 
 export default class SignUpForm extends Component {
     static navigationOptions = {
-        title: 'Sign Up',
+        title: 'Log In',
     };
     render() {
         return (
             <Container>
+                <Header/>
                 <Content>
                     <Form>
                         <Item>
@@ -17,12 +18,9 @@ export default class SignUpForm extends Component {
                         <Item>
                             <Input placeholder="Password" />
                         </Item>
-                        <Item last>
-                            <Input placeholder="Password once again" />
-                        </Item>
                         <Button
-                            title="Sign Up"
-                            onPress={() => this.props.navigation.navigate('App')}
+                            title="Log In"
+                            onPress={() => this.props.navigation.navigate('RoutesList')}
                         />
                     </Form>
                 </Content>
@@ -30,3 +28,4 @@ export default class SignUpForm extends Component {
         );
     }
 }
+
