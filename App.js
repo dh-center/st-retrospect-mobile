@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import AppHeader from './components/AppHeader'
+import SignUpForm from './components/SignUpForm'
 
 
 const client = new ApolloClient({
@@ -20,9 +21,10 @@ export default class App extends Component {
         return (
             <ApolloProvider client={client}>
 
-                <View style={styles.container}>
-                    <AppHeader/>
-                </View>
+                {/*<View style={styles.container}>*/}
+                    {/*<AppHeader/>*/}
+                    <SignUpForm/>
+                {/*</View>*/}
             </ApolloProvider>
         );
     }
