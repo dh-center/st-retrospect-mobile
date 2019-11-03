@@ -11,6 +11,13 @@ import { AsyncStorage } from 'react-native';
 //TODO: Make Search button functional
 //TODO: Make Menu button functional
 export default class HomeScreen extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            accessToken: this.props.navigation.getParam('accessToken'),
+        };
+    };
     static navigationOptions = {
         title: 'Routes',
         headerLeft: () => (
@@ -20,7 +27,7 @@ export default class HomeScreen extends Component {
         ),
         headerRight: () => (
             <Button transparent>
-                <Icon name='exit'/>
+                <Icon name='search'/>
             </Button>
         )
     };
@@ -30,13 +37,13 @@ export default class HomeScreen extends Component {
                 <Container>
                     <Tabs >
                         <Tab heading="NEARBY">
-                            <RoutesList/>
+                            <RoutesList accessToken={this.state.accessToken}/>
                         </Tab>
                         <Tab heading="FOR YOU">
-                            <RoutesList/>
+                            <RoutesList accessToken={this.state.accessToken}/>
                         </Tab>
                         <Tab heading="SAVED">
-                            <RoutesList/>
+                            <RoutesList accessToken={this.state.accessToken}/>
                         </Tab>
                     </Tabs>
                 </Container>

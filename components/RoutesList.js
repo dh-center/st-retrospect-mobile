@@ -55,6 +55,14 @@ class RoutesList extends Component {
         title: 'Routes List',
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            accessToken: props.accessToken,
+        };
+    };
+
     render() {
         return (
             <ApolloProvider client={client}>
@@ -66,7 +74,7 @@ class RoutesList extends Component {
 
     _signOutAsync = async () => {
         await AsyncStorage.clear();
-        this.props.navigation.navigate('Auth');
+        this.props.navigation.navigate('LogIn');
     };
 }
 

@@ -73,9 +73,4 @@ export default class SignUpForm extends Component {
             </StyleProvider>
         );
     };
-    _signInAsync = async () => {
-        await AsyncStorage.setItem('userToken', 'abc');
-        this.props.navigation.navigate('App');
-    };
-
 }

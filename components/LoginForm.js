@@ -17,6 +17,7 @@ export default class SignUpForm extends Component {
         this.state = {
             username: '',
             password: '',
+            accessToken: ''
         };
     };
     onLogIn() {
@@ -24,16 +25,13 @@ export default class SignUpForm extends Component {
         const encodedUsername= encodeURIComponent(username);
         const encodedPassword= encodeURIComponent(password);
         const parmsUrl = logInUrl+`?username=${encodedUsername}&password=${encodedPassword}`;
-        console.log(parmsUrl);
+
         fetch(parmsUrl)
-            .then((response) => {
-                if (response.status == 200) {
-                    console.log('OK');
-                    this.props.navigation.navigate('App');
-                }
-                else {
-                    console.log(response.status);
-                }
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({accessToken: responseData.data.accessToken});
+                console.log(this.state.accessToken);
+                this.props.navigation.navigate('App', {accessToken: this.state.accessToken});
             })
             .catch((error) => {
                 console.error(error);
