@@ -5,8 +5,8 @@ import { graphql } from 'react-apollo';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
-import { List } from 'native-base'
-import { Text } from 'react-native'
+import {List, Button, Icon} from 'native-base';
+import {AsyncStorage, Text} from 'react-native';
 
 import RouteItem from './RouteItem'
 
@@ -41,7 +41,7 @@ const RoutesListData = graphql(routesQuery)(props => {
     if (routes) {
         return <List>
                     {routes.map((value) => {
-                        return <RouteItem data={value}/>
+                        return <RouteItem data={value} key={value.id}/>
                     })}
                 </List>
     }
@@ -59,9 +59,15 @@ class RoutesList extends Component {
         return (
             <ApolloProvider client={client}>
                 <RoutesListData/>
+                <Button title='Quit' onPress={this._signOutAsync}/>
             </ApolloProvider>
         )
     }
+
+    _signOutAsync = async () => {
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Auth');
+    };
 }
 
 export default RoutesList;
