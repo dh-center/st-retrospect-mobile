@@ -7,7 +7,7 @@ Mockups: https://marvelapp.com/9d06b61
 ### Setup
 
 To run the app, you will need Android Studio installed and a device/emulator.
-Refer to [React Native docs] (https://facebook.github.io/react-native/docs/getting-started).
+Refer to [React Native docs](https://facebook.github.io/react-native/docs/getting-started).
 
 - List all emulators:
 `emulator -list-avds`
