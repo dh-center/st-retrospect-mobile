@@ -11,14 +11,11 @@ import {
     StyleProvider,
     Body,
     Title,
-    Grid,
-    Row
+
 } from 'native-base';
 import getTheme from '../theme/components';
 import commonColor from '../theme/variables/commonColor';
-
-
-const logInUrl = 'https://api.st-retrospect.dh-center.ru/login';
+import {sendLogInRequest} from '../services/api/requests';
 
 
 export default class SignUpForm extends Component {
@@ -39,42 +36,39 @@ export default class SignUpForm extends Component {
         this.state = {
             username: '',
             password: '',
-            accessToken: ''
         };
     };
     onLogIn() {
         const {username, password} = this.state;
-        const encodedUsername= encodeURIComponent(username);
-        const encodedPassword= encodeURIComponent(password);
-        const parmsUrl = logInUrl+`?username=${encodedUsername}&password=${encodedPassword}`;
-
-        fetch(parmsUrl)
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({accessToken: responseData.data.accessToken});
-                console.log(this.state.accessToken);
-                this.props.navigation.navigate('App', {accessToken: this.state.accessToken});
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        if (username && password) {
+            sendLogInRequest(username, password);
+            this.props.navigation.navigate('App');
+        }
     };
     render() {
         return (
             <StyleProvider  style={getTheme(commonColor)}>
                 <Container>
                     <Content>
-                        <Form style={{margin: 10}}>
+                        <Form>
                             <Item>
-                                <Input placeholder="Username" onChangeText={(username) => this.setState({ username })} />
+                                <Input
+                                    placeholder="Username"
+                                    onChangeText={(username) => this.setState({ username })}
+                                />
                             </Item>
                             <Item>
-                                <Input placeholder="Password" onChangeText={(password) => this.setState({ password })} />
+                                <Input
+                                    placeholder="Password"
+                                    onChangeText={(password) => this.setState({ password })}
+                                    secureTextEntry={true}
+                                />
                             </Item>
                             <Button
                                 title="Log In"
                                 onPress={this.onLogIn.bind(this)}
                                 primary block
+                                style={{margin: 10}}
                             >
                                 <Text>
                                     Log In

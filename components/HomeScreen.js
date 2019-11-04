@@ -8,13 +8,6 @@ import commonColor from '../theme/variables/commonColor';
 //TODO: Make Search button functional
 //TODO: Make Menu button functional
 export default class HomeScreen extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            accessToken: this.props.navigation.getParam('accessToken'),
-        };
-    };
     static navigationOptions = ({ navigation }) => ({
         header: (
             <StyleProvider  style={getTheme(commonColor)}>
@@ -42,13 +35,13 @@ export default class HomeScreen extends Component {
                 <Container>
                     <Tabs >
                         <Tab heading="NEARBY">
-                            <RoutesList accessToken={this.state.accessToken}/>
+                            <RoutesList/>
                         </Tab>
                         <Tab heading="FOR YOU">
-                            <RoutesList accessToken={this.state.accessToken}/>
+                            <RoutesList/>
                         </Tab>
                         <Tab heading="SAVED">
-                            <RoutesList accessToken={this.state.accessToken}/>
+                            <RoutesList/>
                         </Tab>
                     </Tabs>
                 </Container>

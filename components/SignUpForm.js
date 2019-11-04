@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {Container, Content, Form, Item, Input, Button, StyleProvider, Header, Body, Title, Text} from 'native-base';
 import getTheme from '../theme/components';
 import commonColor from '../theme/variables/commonColor';
-import { AsyncStorage }from 'react-native';
-
-const signUpUrl = 'https://api.st-retrospect.dh-center.ru/sign-up';
+import {sendLogInRequest, sendSignUpRequest} from '../services/api/requests';
 
 
 export default class SignUpForm extends Component {
@@ -25,37 +23,21 @@ export default class SignUpForm extends Component {
         this.state = {
             username: '',
             password: '',
+            passwordCheck: '',
         };
     };
     onSignUp() {
-        const { username, password } = this.state;
-        fetch(
-            signUpUrl,
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                }),
-            }
-        )
-            .then((response) => {
-                if (response.status == 201) {
-                    console.log('OK');
-                    this.props.navigation.navigate('LogIn');
-                }
-                else {
-                    console.log(response.status);
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        const { username, password, passwordCheck } = this.state;
+        if (username && password && (password == passwordCheck)) {
+            sendSignUpRequest(username, password);
+            sendLogInRequest(username, password);
+            this.props.navigation.navigate('App');
+        }
+        else {
+            console.error("No match");
+        }
     }
+
     render() {
         return (
             <StyleProvider  style={getTheme(commonColor)}>
@@ -63,15 +45,31 @@ export default class SignUpForm extends Component {
                     <Content>
                         <Form>
                             <Item>
-                                <Input placeholder="Username" onChangeText={(username) => this.setState({ username })} />
+                                <Input
+                                    placeholder="Username"
+                                    onChangeText={(username) => this.setState({ username })}
+                                />
                             </Item>
                             <Item>
-                                <Input placeholder="Password" onChangeText={(password) => this.setState({ password })} />
+                                <Input
+                                    placeholder="Password"
+                                    onChangeText={(password) => this.setState({ password })}
+                                    secureTextEntry={true}
+                                />
                             </Item>
                             <Item last>
-                                <Input placeholder="Password once again" />
+                                <Input
+                                    placeholder="Password once again"
+                                    onChangeText={(passwordCheck) => this.setState({ passwordCheck })}
+                                    secureTextEntry={true}
+                                />
                             </Item>
-                            <Button title="Sign Up" onPress={this.onSignUp.bind(this)}>
+                            <Button
+                                title="Sign Up"
+                                onPress={this.onSignUp.bind(this)}
+                                primary block
+                                style={{margin: 10}}
+                            >
                                 <Text>Sign Up</Text>
                             </Button>
                         </Form>
