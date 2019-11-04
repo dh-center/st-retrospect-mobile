@@ -67,7 +67,6 @@ class RoutesList extends Component {
         return (
             <ApolloProvider client={client}>
                 <RoutesListData/>
-                <Button title='Quit' onPress={this._signOutAsync}/>
             </ApolloProvider>
         )
     }

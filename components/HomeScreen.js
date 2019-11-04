@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-
-import { Container, Button, Icon, Tabs, Tab, StyleProvider } from 'native-base';
-
+import { Container, Button, Icon, Tabs, Tab, StyleProvider, Header, Left, Right, Title, Body } from 'native-base';
 import RoutesList from './RoutesList'
 import getTheme from '../theme/components';
 import commonColor from '../theme/variables/commonColor';
-import { AsyncStorage } from 'react-native';
 
 //TODO: Create nearby, for you, saved components for routes
 //TODO: Make Search button functional
@@ -18,19 +15,27 @@ export default class HomeScreen extends Component {
             accessToken: this.props.navigation.getParam('accessToken'),
         };
     };
-    static navigationOptions = {
-        title: 'Routes',
-        headerLeft: () => (
-            <Button transparent>
-                <Icon ios='ios-menu' android="md-menu" />
-            </Button>
-        ),
-        headerRight: () => (
-            <Button transparent>
-                <Icon name='search'/>
-            </Button>
+    static navigationOptions = ({ navigation }) => ({
+        header: (
+            <StyleProvider  style={getTheme(commonColor)}>
+                <Header>
+                    <Left>
+                        <Button transparent>
+                            <Icon ios='ios-menu' android="md-menu" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Routes</Title>
+                    </Body>
+                    <Right>
+                        <Button transparent>
+                            <Icon name='search'/>
+                        </Button>
+                    </Right>
+                </Header>
+            </StyleProvider>
         )
-    };
+    });
     render() {
         return (
             <StyleProvider  style={getTheme(commonColor)}>

@@ -1,5 +1,19 @@
 import React, { Component } from 'react';
-import {Container, Content, Form, Item, Input, Button, Header, Text, StyleProvider} from 'native-base';
+import {
+    Container,
+    Content,
+    Form,
+    Item,
+    Input,
+    Button,
+    Header,
+    Text,
+    StyleProvider,
+    Body,
+    Title,
+    Grid,
+    Row
+} from 'native-base';
 import getTheme from '../theme/components';
 import commonColor from '../theme/variables/commonColor';
 
@@ -8,9 +22,17 @@ const logInUrl = 'https://api.st-retrospect.dh-center.ru/login';
 
 
 export default class SignUpForm extends Component {
-    static navigationOptions = {
-        title: 'Log In',
-    };
+    static navigationOptions = ({ navigation }) => ({
+        header: (
+            <StyleProvider  style={getTheme(commonColor)}>
+                <Header>
+                    <Body>
+                        <Title>Log In</Title>
+                    </Body>
+                </Header>
+            </StyleProvider>
+        )
+    });
     constructor(props) {
         super(props);
 
@@ -42,7 +64,7 @@ export default class SignUpForm extends Component {
             <StyleProvider  style={getTheme(commonColor)}>
                 <Container>
                     <Content>
-                        <Form>
+                        <Form style={{margin: 10}}>
                             <Item>
                                 <Input placeholder="Username" onChangeText={(username) => this.setState({ username })} />
                             </Item>
@@ -51,13 +73,21 @@ export default class SignUpForm extends Component {
                             </Item>
                             <Button
                                 title="Log In"
-                                onPress={this.onLogIn.bind(this)}>
+                                onPress={this.onLogIn.bind(this)}
+                                primary block
+                            >
                                 <Text>
                                     Log In
                                 </Text>
                             </Button>
                         </Form>
-                        <Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')}>
+
+                        <Button
+                            title="Sign Up"
+                            onPress={() => this.props.navigation.navigate('SignUp')}
+                            bordered primary block
+                            style={{margin: 10}}
+                        >
                             <Text>Sign Up</Text>
                         </Button>
                     </Content>

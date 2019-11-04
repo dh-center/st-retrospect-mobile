@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Container, Content, Form, Item, Input, Button, StyleProvider} from 'native-base';
+import {Container, Content, Form, Item, Input, Button, StyleProvider, Header, Body, Title, Text} from 'native-base';
 import getTheme from '../theme/components';
 import commonColor from '../theme/variables/commonColor';
 import { AsyncStorage }from 'react-native';
@@ -8,9 +8,17 @@ const signUpUrl = 'https://api.st-retrospect.dh-center.ru/sign-up';
 
 
 export default class SignUpForm extends Component {
-    static navigationOptions = {
-        title: 'Sign Up',
-    };
+    static navigationOptions = ({ navigation }) => ({
+        header: (
+            <StyleProvider  style={getTheme(commonColor)}>
+                <Header>
+                    <Body>
+                        <Title>Sign Up</Title>
+                    </Body>
+                </Header>
+            </StyleProvider>
+        )
+    });
     constructor(props) {
         super(props);
 
@@ -63,10 +71,9 @@ export default class SignUpForm extends Component {
                             <Item last>
                                 <Input placeholder="Password once again" />
                             </Item>
-                            <Button
-                                title="Sign Up"
-                                onPress={this.onSignUp.bind(this)}
-                            />
+                            <Button title="Sign Up" onPress={this.onSignUp.bind(this)}>
+                                <Text>Sign Up</Text>
+                            </Button>
                         </Form>
                     </Content>
                 </Container>
