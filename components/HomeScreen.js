@@ -3,11 +3,18 @@ import { Container, Button, Icon, Tabs, Tab, StyleProvider, Header, Left, Right,
 import RoutesList from './RoutesList'
 import getTheme from '../theme/components';
 import commonColor from '../theme/variables/commonColor';
+import {store} from '../data/users/store';
+import {REMOVE_AUTH_TOKEN} from '../data/users/action_types';
 
 //TODO: Create nearby, for you, saved components for routes
 //TODO: Make Search button functional
 //TODO: Make Menu button functional
+function logOut() {
+    store.dispatch({type: REMOVE_AUTH_TOKEN});
+    console.log(store.getState());
+}
 export default class HomeScreen extends Component {
+
     static navigationOptions = ({ navigation }) => ({
         header: (
             <StyleProvider  style={getTheme(commonColor)}>
@@ -22,7 +29,7 @@ export default class HomeScreen extends Component {
                     </Body>
                     <Right>
                         <Button transparent>
-                            <Icon name='search'/>
+                            <Icon name='exit' onPress={logOut()}/>
                         </Button>
                     </Right>
                 </Header>

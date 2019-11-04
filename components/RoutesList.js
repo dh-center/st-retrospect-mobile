@@ -1,32 +1,26 @@
 import React, { Component } from 'react';
 
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
-import {List, Button, Icon} from 'native-base';
-import {AsyncStorage, Text} from 'react-native';
+import {List} from 'native-base';
+import {Text} from 'react-native';
 
 import RouteItem from './RouteItem'
+import {routesUrl} from '../services/api/endpoints';
+import {routesQuery} from '../services/api/queries';
+import {store} from '../data/users/store';
 
-const routesQuery = gql`
-    query {
-      routes {
-        id
-        name
-        description
-        photoLink
-      }
-    }
-`;
+const authToken = store.getState().authToken;
+
 
 const client = new ApolloClient({
     link: new HttpLink({
-        // uri: 'https://api.st-retrospect.dh-center.ru/graphql',
-        uri: 'https://api.stage.st-retrospect.dh-center.ru/graphql',
+        uri: routesUrl,
         headers: {
-            "accept-language": "ru"
+            "accept-language": "ru",
+            "Authorization": "Bearer "+authToken
         }
     }),
     cache: new InMemoryCache()

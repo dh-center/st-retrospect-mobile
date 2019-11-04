@@ -39,7 +39,7 @@ export function sendLogInRequest(username, password) {
         .then((response) => response.json())
         .then((responseData) => {
             store.dispatch({type: SAVE_AUTH_TOKEN, authToken: responseData.data.accessToken});
-            console.log(store.getState());
+
         })
         .catch((error) => {
             console.error(error);
