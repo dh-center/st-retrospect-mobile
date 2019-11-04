@@ -78,7 +78,7 @@ export default () => {
       'NativeBase.Label': {
         paddingRight: 5
       },
-      marginLeft: 15
+      margin: 8
     }
   };
 
