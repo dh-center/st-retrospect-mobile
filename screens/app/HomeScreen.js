@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { Container, Button, Icon, Tabs, Tab, StyleProvider, Header, Left, Right, Title, Body } from 'native-base';
 import RoutesList from './RoutesList'
-import getTheme from '../theme/components';
-import commonColor from '../theme/variables/commonColor';
-import {store} from '../data/users/store';
-import {REMOVE_AUTH_TOKEN} from '../data/users/action_types';
+import getTheme from '../../theme/components/index';
+import commonColor from '../../theme/variables/commonColor';
+import {store} from '../../data/users/store';
+import {REMOVE_AUTH_TOKEN} from '../../data/users/action_types';
 
-//TODO: Create nearby, for you, saved components for routes
-//TODO: Make Search button functional
 //TODO: Make Menu button functional
-function logOut() {
-    store.dispatch({type: REMOVE_AUTH_TOKEN});
-    console.log(store.getState());
+function showSearchBar() {
+    // store.dispatch({type: REMOVE_AUTH_TOKEN});
+    // this.props.navigation.navigate('Auth');
+    // TODO
 }
 export default class HomeScreen extends Component {
+    navigation = this.props.navigation;
 
     static navigationOptions = ({ navigation }) => ({
+
         header: (
             <StyleProvider  style={getTheme(commonColor)}>
                 <Header>
@@ -29,7 +30,7 @@ export default class HomeScreen extends Component {
                     </Body>
                     <Right>
                         <Button transparent>
-                            <Icon name='exit' onPress={logOut()}/>
+                            <Icon name='search' onPress={showSearchBar()}/>
                         </Button>
                     </Right>
                 </Header>

@@ -4,7 +4,7 @@ import {
     StatusBar,
     View,
 } from 'react-native';
-import { store} from '../data/users/store';
+import { store} from '../../data/users/store';
 
 export default class AuthLoadingScreen extends React.Component {
     componentDidMount() {

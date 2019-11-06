@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Container, Content, Form, Item, Input, Button, StyleProvider, Header, Body, Title, Text} from 'native-base';
-import getTheme from '../theme/components';
-import commonColor from '../theme/variables/commonColor';
-import {sendLogInRequest, sendSignUpRequest} from '../services/api/requests';
+import getTheme from '../../theme/components/index';
+import commonColor from '../../theme/variables/commonColor';
+import {sendLogInRequest, sendSignUpRequest} from '../../services/api/requests';
 
 
 export default class SignUpForm extends Component {

@@ -13,9 +13,9 @@ import {
     Title,
 
 } from 'native-base';
-import getTheme from '../theme/components';
-import commonColor from '../theme/variables/commonColor';
-import {sendLogInRequest} from '../services/api/requests';
+import getTheme from '../../theme/components/index';
+import commonColor from '../../theme/variables/commonColor';
+import {sendLogInRequest} from '../../services/api/requests';
 
 
 export default class SignUpForm extends Component {
