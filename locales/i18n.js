@@ -1,8 +1,8 @@
 import ReactNative from 'react-native';
 import I18n from 'react-native-i18n';
 
-import en from 'locales/en.json';
-import ru from 'locales/ru.json'
+import en from './en.json';
+import ru from './ru.json'
 
 I18n.fallbacks = true;
 
