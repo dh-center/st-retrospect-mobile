@@ -1,8 +1,14 @@
-import {Button, Icon, Right} from 'native-base';
-import React from 'react';
+import {Button, Icon} from 'native-base';
+import React, {Component} from 'react';
 
-export const SearchButton = <Right>
-    <Button transparent>
-        <Icon name='search'/>
-    </Button>
-</Right>;
+class SearchButton extends Component{
+    render() {
+        return (
+                <Button transparent>
+                    <Icon name='search'/>
+                </Button>
+        )
+    }
+}
+
+export default SearchButton

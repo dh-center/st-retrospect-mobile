@@ -1,9 +1,10 @@
 import React from 'react';
-import HomeScreen from './screens/app/HomeScreen'
+import LogOut from './screens/auth/LogOut'
 import SignUpForm from './screens/auth/SignUpForm'
 import LogInForm from './screens/auth/LogInForm'
 import AuthLoadingScreen from './screens/loading/AuthLoadingScreen';
 import { PersistGate } from 'redux-persist/integration/react'
+import { strings } from './locales/i18n';
 
 import {
     createAppContainer,
@@ -18,9 +19,12 @@ import {Provider} from 'react-redux';
 
 import Example from './screens/Example';
 import RoutesList from './screens/app/RoutesList';
-import {Button, Icon, Right} from 'native-base';
-import {SearchButton} from './components/navigation/SearchButton';
-import {DrawerButton} from './components/navigation/DrawerButton';
+import SearchButton from './components/navigation/SearchButton';
+import DrawerButton from './components/navigation/DrawerButton';
+import getTheme from './theme/components';
+import commonColor from './theme/variables/commonColor';
+import {Body, Button, Container, Header, Icon, Left, Right, StyleProvider, Title} from 'native-base';
+import HomeScreen from './screens/app/HomeScreen';
 
 const AuthStack = createStackNavigator({
     LogIn: {
@@ -56,27 +60,17 @@ const MainTabs = createMaterialTopTabNavigator({
         navigationOptions: {
             tabBarLabel: 'Saved',
         },
-    },
-});
-
-const SideMenu = createStackNavigator({
-    SettingsList: {
-        screen: Example,
-        navigationOptions: {
-            headerTitle: 'Settings List',
-        },
-    },
-    Profile: {
-        screen: Example,
-        navigationOptions: {
-            headerTitle: 'Profile',
-        },
-    },
+    }
 });
 
 const MainDrawer = createDrawerNavigator({
-    MainTabs: MainTabs,
-    SideMenu: SideMenu,
+    Routes: {
+        screen: HomeScreen,
+    },
+    'Log Out': {
+        screen: LogOut,
+    },
+
 });
 
 const AppModalStack = createStackNavigator(
@@ -89,12 +83,21 @@ const AppModalStack = createStackNavigator(
     {
         headerMode: 'screen',
         headerBackTitleVisible: false,
-        defaultNavigationOptions: () => {
-            return {
-                headerTitle: 'Routes',
-                headerLeft: <DrawerButton/>
-            }
-        }
+        defaultNavigationOptions: ({ navigation }) => ({
+            header: <StyleProvider  style={getTheme(commonColor)}>
+                        <Header>
+                            <Left>
+                                <DrawerButton navigation={navigation}/>
+                            </Left>
+                            <Body>
+                                <Title>{strings('routes')}</Title>
+                            </Body>
+                            <Right>
+                                <SearchButton/>
+                            </Right>
+                        </Header>
+                    </StyleProvider>
+        }),
     }
 );
 
@@ -116,11 +119,15 @@ const AppContainer = createAppContainer(
 class App extends React.Component {
     render() {
         return (
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <AppContainer/>
-                </PersistGate>
-            </Provider>
+            <StyleProvider  style={getTheme(commonColor)}>
+                <Container>
+                    <Provider store={store}>
+                        <PersistGate loading={null} persistor={persistor}>
+                            <AppContainer/>
+                        </PersistGate>
+                    </Provider>
+                </Container>
+            </StyleProvider>
         );
     }
 }

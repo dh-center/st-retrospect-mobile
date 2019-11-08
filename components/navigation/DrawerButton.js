@@ -1,15 +1,17 @@
-import {Button, Icon} from 'native-base';
+import {Button, Icon, StyleProvider} from 'native-base';
 import React, { Component } from 'react';
-import { withNavigation } from 'react-navigation';
+import {withNavigation} from 'react-navigation';
 
 
 class DrawerButton extends Component{
     render() {
         return (
-            <Button
+            <Button transparent
                 onPress={()=>{
-                    this.props.navigation.openDrawer();
-                }}>
+                    this.props.navigation.toggleDrawer();
+                }}
+
+            >
                 <Icon name='menu'/>
             </Button>
         )
