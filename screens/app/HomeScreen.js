@@ -3,18 +3,13 @@ import { Container, Button, Icon, Tabs, Tab, StyleProvider, Header, Left, Right,
 import RoutesList from './RoutesList'
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
-import { strings } from '../../locales/i18n';
 
 
-import DrawerButton from '../../components/navigation/DrawerButton';
+
 import {withNavigation} from 'react-navigation';
+import {t} from '../../locales/i18n';
 
-//TODO: Make Menu button functional
-function showSearchBar() {
-    // store.dispatch({type: REMOVE_AUTH_TOKEN});
-    // this.props.navigation.navigate('Auth');
-    // TODO
-}
+
 class HomeScreen extends Component {
 
     render() {
@@ -22,13 +17,13 @@ class HomeScreen extends Component {
             <StyleProvider  style={getTheme(commonColor)}>
                 <Container>
                     <Tabs >
-                        <Tab heading={strings('nearby')}>
+                        <Tab heading={t('nearby')}>
                             <RoutesList/>
                         </Tab>
-                        <Tab heading={strings('for you')}>
+                        <Tab heading={t('for you')}>
                             <RoutesList/>
                         </Tab>
-                        <Tab heading={strings('saved')}>
+                        <Tab heading={t('saved')}>
                             <RoutesList/>
                         </Tab>
                     </Tabs>

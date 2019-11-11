@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { ListItem, Left, Body, Thumbnail, H2 } from 'native-base'
 import { Text } from 'react-native'
+import i18n from "i18n-js";
 
-/*TODO: replace 'ru' with user language settings*/
 export default class RouteItem extends Component {
     render() {
         return (
@@ -12,8 +12,8 @@ export default class RouteItem extends Component {
                     <Thumbnail source={{ uri: this.props.data.photoLink }} />
                 </Left>
                 <Body>
-                <H2>{ this.props.data.name.ru }</H2>
-                <Text note>{ this.props.data.description.ru }</Text>
+                <H2>{ this.props.data.name[i18n.locale] }</H2>
+                <Text note>{ this.props.data.description[i18n.locale] }</Text>
                 </Body>
             </ListItem>
         )

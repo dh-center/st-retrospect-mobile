@@ -4,7 +4,8 @@ import SignUpForm from './screens/auth/SignUpForm'
 import LogInForm from './screens/auth/LogInForm'
 import AuthLoadingScreen from './screens/loading/AuthLoadingScreen';
 import { PersistGate } from 'redux-persist/integration/react'
-import { strings } from './locales/i18n';
+import * as RNLocalize from "react-native-localize";
+import {setI18nConfig} from './locales/i18n';
 
 import {
     createAppContainer,
@@ -23,8 +24,9 @@ import SearchButton from './components/navigation/SearchButton';
 import DrawerButton from './components/navigation/DrawerButton';
 import getTheme from './theme/components';
 import commonColor from './theme/variables/commonColor';
-import {Body, Button, Container, Header, Icon, Left, Right, StyleProvider, Title} from 'native-base';
+import {Body, Container, Header, Left, Right, StyleProvider, Title} from 'native-base';
 import HomeScreen from './screens/app/HomeScreen';
+import {t} from './locales/i18n';
 
 const AuthStack = createStackNavigator({
     LogIn: {
@@ -90,7 +92,7 @@ const AppModalStack = createStackNavigator(
                                 <DrawerButton navigation={navigation}/>
                             </Left>
                             <Body>
-                                <Title>{strings('routes')}</Title>
+                                <Title>{t('routes')}</Title>
                             </Body>
                             <Right>
                                 <SearchButton/>
@@ -117,6 +119,23 @@ const AppContainer = createAppContainer(
 
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        setI18nConfig();
+    }
+
+    componentDidMount() {
+        RNLocalize.addEventListener("change", this.handleLocalizationChange);
+    }
+
+    componentWillUnmount() {
+        RNLocalize.removeEventListener("change", this.handleLocalizationChange);
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig();
+        this.forceUpdate();
+    };
     render() {
         return (
             <StyleProvider  style={getTheme(commonColor)}>
