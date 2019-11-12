@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import { ListItem, Left, Body, Thumbnail, H2 } from 'native-base'
+import { ListItem, Left, Body, Thumbnail, H2 } from 'native-base';
 import { Text } from 'react-native'
 import i18n from "i18n-js";
 
-export default class RouteItem extends Component {
+class RouteItem extends Component {
+
     render() {
         return (
             <ListItem avatar>
@@ -19,4 +20,6 @@ export default class RouteItem extends Component {
         )
     }
 };
+
+export default RouteItem;
 

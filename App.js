@@ -27,6 +27,7 @@ import commonColor from './theme/variables/commonColor';
 import {Body, Container, Header, Left, Right, StyleProvider, Title} from 'native-base';
 import HomeScreen from './screens/app/HomeScreen';
 import {t} from './locales/i18n';
+import Navigation from './screens/app/Navigation';
 
 const AuthStack = createStackNavigator({
     LogIn: {
@@ -72,15 +73,15 @@ const MainDrawer = createDrawerNavigator({
     'Log Out': {
         screen: LogOut,
     },
+    Route: {
+        screen: Navigation,
+    },
 
 });
 
 const AppModalStack = createStackNavigator(
     {
         App: MainDrawer,
-        Route: {
-            screen: Example,
-        },
     },
     {
         headerMode: 'screen',

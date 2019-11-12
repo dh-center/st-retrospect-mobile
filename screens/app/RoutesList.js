@@ -3,8 +3,22 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import {withNavigation} from 'react-navigation';
 
-import {Body, Button, Header, Icon, Left, List, Right, StyleProvider, Title} from 'native-base';
+import {
+    Body,
+    Button,
+    H2,
+    Header,
+    Icon,
+    Left,
+    List,
+    ListItem,
+    Right,
+    StyleProvider,
+    Thumbnail,
+    Title,
+} from 'native-base';
 import {Text} from 'react-native';
 
 import RouteItem from './RouteItem'
@@ -13,6 +27,7 @@ import {routesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
+import i18n from 'i18n-js';
 
 const authToken = store.getState().authToken;
 
@@ -38,13 +53,22 @@ const client = new ApolloClient({
 
 const RoutesListData = graphql(routesQuery)(props => {
     const { error, routes } = props.data;
+
     if (error) {
         return <Text>{error}</Text>;
     }
     if (routes) {
         return <List>
                     {routes.map((value) => {
-                        return <RouteItem data={value} key={value.id}/>
+                        return <ListItem avatar key={value.id} button onPress={() => {props.navigation.navigate('Route')}}>
+                                    <Left>
+                                        <Thumbnail source={{ uri: value.photoLink }} />
+                                    </Left>
+                                    <Body>
+                                    <H2>{ value.name[i18n.locale] }</H2>
+                                    <Text note>{ value.description[i18n.locale] }</Text>
+                                    </Body>
+                                </ListItem>;
                     })}
                 </List>
     }
@@ -54,36 +78,18 @@ const RoutesListData = graphql(routesQuery)(props => {
 
 
 class RoutesList extends Component {
-    static navigationOptions = ({ navigation }) => ({
 
-        header: (
-            <StyleProvider  style={getTheme(commonColor)}>
-                <Header>
-                    <Left>
-                        <Button transparent>
-                            <Icon ios='ios-menu' android="md-menu" />
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title>Routes</Title>
-                    </Body>
-                    <Right>
-                        <Button transparent>
-                            <Icon name='search' onPress={showSearchBar()}/>
-                        </Button>
-                    </Right>
-                </Header>
-            </StyleProvider>
-        )
-    });
+
+
 
     render() {
+
         return (
             <ApolloProvider client={client}>
-                <RoutesListData/>
+                <RoutesListData navigation={this.props.navigation}/>
             </ApolloProvider>
         )
     }
 }
 
-export default RoutesList;
+export default withNavigation(RoutesList);

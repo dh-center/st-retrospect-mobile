@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Button, Icon, Tabs, Tab, StyleProvider, Header, Left, Right, Title, Body } from 'native-base';
+import { Container, Tabs, Tab, StyleProvider } from 'native-base';
 import RoutesList from './RoutesList'
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
-
-
-
 import {withNavigation} from 'react-navigation';
 import {t} from '../../locales/i18n';
+import Navigation from './Navigation';
 
 
 class HomeScreen extends Component {
@@ -19,6 +17,7 @@ class HomeScreen extends Component {
                     <Tabs >
                         <Tab heading={t('nearby')}>
                             <RoutesList/>
+
                         </Tab>
                         <Tab heading={t('for you')}>
                             <RoutesList/>
@@ -27,10 +26,11 @@ class HomeScreen extends Component {
                             <RoutesList/>
                         </Tab>
                     </Tabs>
+
                 </Container>
             </StyleProvider>
         );
     };
 }
 
-export default withNavigation(HomeScreen)
+export default HomeScreen
