@@ -23,7 +23,7 @@ import {Text} from 'react-native';
 
 import RouteItem from './RouteItem'
 import {routesUrl} from '../../services/api/endpoints';
-import {routesQuery} from '../../services/api/queries';
+import {nearRoutesQuery, savedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
@@ -31,12 +31,6 @@ import i18n from 'i18n-js';
 
 const authToken = store.getState().authToken;
 
-
-function showSearchBar() {
-    // store.dispatch({type: REMOVE_AUTH_TOKEN});
-    // this.props.navigation.navigate('Auth');
-    // TODO
-}
 
 
 const client = new ApolloClient({
@@ -51,15 +45,15 @@ const client = new ApolloClient({
 });
 
 
-const RoutesListData = graphql(routesQuery)(props => {
-    const { error, routes } = props.data;
+const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
+    const { error, me } = props.data;
 
     if (error) {
-        return <Text>{error}</Text>;
+        return <Text>err</Text>;
     }
-    if (routes) {
+    if (me) {
         return <List>
-                    {routes.map((value) => {
+                    {me.savedRoutes.map((value) => {
                         return <ListItem avatar key={value.id} button onPress={() => {props.navigation.navigate('Route')}}>
                                     <Left>
                                         <Thumbnail source={{ uri: value.photoLink }} />
@@ -77,19 +71,16 @@ const RoutesListData = graphql(routesQuery)(props => {
 });
 
 
-class RoutesList extends Component {
-
-
-
+class SavedRoutesList extends Component {
 
     render() {
 
         return (
             <ApolloProvider client={client}>
-                <RoutesListData navigation={this.props.navigation}/>
+                <SavedRoutesListData navigation={this.props.navigation}/>
             </ApolloProvider>
         )
     }
 }
 
-export default withNavigation(RoutesList);
+export default withNavigation(SavedRoutesList);

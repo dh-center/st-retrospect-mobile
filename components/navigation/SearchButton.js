@@ -4,11 +4,15 @@ import React, {Component} from 'react';
 class SearchButton extends Component{
     render() {
         return (
-                <Button transparent>
-                    <Icon name='search'/>
-                </Button>
+            <Button transparent
+                    onPress={()=>{
+                        this.props.navigation.navigate('Search');
+                    }}>
+                <Icon name='search'/>
+            </Button>
         )
     }
 }
 
 export default SearchButton
+

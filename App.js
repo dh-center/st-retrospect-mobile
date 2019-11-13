@@ -19,7 +19,7 @@ import {Provider} from 'react-redux';
 
 
 import Example from './screens/Example';
-import RoutesList from './screens/app/RoutesList';
+import RoutesList from './screens/app/NearRoutesList';
 import SearchButton from './components/navigation/SearchButton';
 import DrawerButton from './components/navigation/DrawerButton';
 import getTheme from './theme/components';
@@ -28,6 +28,7 @@ import {Body, Container, Header, Left, Right, StyleProvider, Title} from 'native
 import HomeScreen from './screens/app/HomeScreen';
 import {t} from './locales/i18n';
 import Navigation from './screens/app/Navigation';
+import SearchBar from './components/navigation/SearchBar';
 
 const AuthStack = createStackNavigator({
     LogIn: {
@@ -66,41 +67,52 @@ const MainTabs = createMaterialTopTabNavigator({
     }
 });
 
-const MainDrawer = createDrawerNavigator({
-    Routes: {
-        screen: HomeScreen,
-    },
-    'Log Out': {
-        screen: LogOut,
-    },
-    Route: {
-        screen: Navigation,
-    },
-
-});
-
-const AppModalStack = createStackNavigator(
+const RoutesScreen = createStackNavigator(
     {
-        App: MainDrawer,
+        Home: HomeScreen,
+        Route: {
+            screen: Navigation,
+        }
     },
     {
         headerMode: 'screen',
         headerBackTitleVisible: false,
         defaultNavigationOptions: ({ navigation }) => ({
             header: <StyleProvider  style={getTheme(commonColor)}>
-                        <Header>
-                            <Left>
-                                <DrawerButton navigation={navigation}/>
-                            </Left>
-                            <Body>
-                                <Title>{t('routes')}</Title>
-                            </Body>
-                            <Right>
-                                <SearchButton/>
-                            </Right>
-                        </Header>
-                    </StyleProvider>
+                <Header searchBar>
+                    <Left>
+                        <DrawerButton navigation={navigation}/>
+                    </Left>
+                    <Body>
+                    <Title>{t('routes')}</Title>
+                    </Body>
+                    <Right>
+                        <SearchButton navigation={navigation}/>
+                    </Right>
+                </Header>
+            </StyleProvider>
         }),
+    }
+);
+
+const MainDrawer = createDrawerNavigator({
+    Routes: RoutesScreen,
+    'Log Out': {
+        screen: LogOut,
+    },
+
+});
+
+
+
+const AppModalStack = createStackNavigator(
+    {
+        App: MainDrawer,
+        Search: SearchBar,
+    },
+    {
+        headerMode:'none'
+
     }
 );
 
@@ -115,6 +127,7 @@ const AppContainer = createAppContainer(
         App: {
             screen: AppModalStack,
         },
+
     })
 );
 
