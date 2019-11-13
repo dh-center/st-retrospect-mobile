@@ -36,7 +36,7 @@ const client = new ApolloClient({
     link: new HttpLink({
         uri: routesUrl,
         headers: {
-            "accept-language": "ru",
+            "accept-language":  i18n.locale,
             "Authorization": "Bearer "+authToken
         }
     }),
@@ -55,15 +55,7 @@ const NearRoutesListData = graphql(nearRoutesQuery)(props => {
     if (nearestRoutes) {
         return <List>
                     {nearestRoutes.map((value) => {
-                        return <ListItem avatar key={value.id} button onPress={() => {props.navigation.navigate('Route')}}>
-                                    <Left>
-                                        <Thumbnail source={{ uri: value.photoLink }} />
-                                    </Left>
-                                    <Body>
-                                    <H2>{ value.name[i18n.locale] }</H2>
-                                    <Text note>{ value.description[i18n.locale] }</Text>
-                                    </Body>
-                                </ListItem>;
+                        return <RouteItem data={value} navigation={props.navigation}/>;
                     })}
                 </List>
     }

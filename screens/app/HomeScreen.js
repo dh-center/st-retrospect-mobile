@@ -19,7 +19,6 @@ class HomeScreen extends Component {
                     <Tabs >
                         <Tab heading={t('nearby')}>
                             <NearRoutesList/>
-
                         </Tab>
                         <Tab heading={t('saved')}>
                             <SavedRoutesList/>

@@ -36,7 +36,7 @@ const client = new ApolloClient({
     link: new HttpLink({
         uri: routesUrl,
         headers: {
-            "accept-language": "ru",
+            "accept-language":  i18n.locale,
             "Authorization": "Bearer "+authToken
         }
     }),
@@ -49,20 +49,12 @@ const ForYouRoutesListData = graphql(likedRoutesQuery)(props => {
     console.log(props.data)
 
     if (error) {
-        return <Text>{error}</Text>;
+        return <Text>err</Text>;
     }
     if (me) {
         return <List>
                     {me.likedRoutes.map((value) => {
-                        return <ListItem avatar key={value.id} button onPress={() => {props.navigation.navigate('Route')}}>
-                                    <Left>
-                                        <Thumbnail source={{ uri: value.photoLink }} />
-                                    </Left>
-                                    <Body>
-                                    <H2>{ value.name[i18n.locale] }</H2>
-                                    <Text note>{ value.description[i18n.locale] }</Text>
-                                    </Body>
-                                </ListItem>;
+                        return <RouteItem data={value} navigation={props.navigation}/>;
                     })}
                 </List>
     }
