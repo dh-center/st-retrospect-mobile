@@ -13,7 +13,7 @@ import {
 } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import {persistor, store} from './data/users/store';
 import {Provider} from 'react-redux';
 
@@ -45,27 +45,6 @@ const AuthStack = createStackNavigator({
     }
 });
 
-
-const MainTabs = createMaterialTopTabNavigator({
-    Nearby: {
-        screen: RoutesList,
-        navigationOptions: {
-            tabBarLabel: 'Nearby',
-        },
-    },
-    ForYou: {
-        screen: RoutesList,
-        navigationOptions: {
-            tabBarLabel: 'For You',
-        },
-    },
-    Saved: {
-        screen: RoutesList,
-        navigationOptions: {
-            tabBarLabel: 'Saved',
-        },
-    }
-});
 
 const RoutesScreen = createStackNavigator(
     {

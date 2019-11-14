@@ -9,14 +9,13 @@ import {Text} from 'react-native';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
-import {likedRoutesQuery} from '../../services/api/queries';
+import {searchRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
-
 import i18n from 'i18n-js';
 
 const authToken = store.getState().authToken;
-const locale = store.getState().locale;
 
+const locale = store.getState().locale;
 
 const client = new ApolloClient({
     link: new HttpLink({
@@ -30,15 +29,21 @@ const client = new ApolloClient({
 });
 
 
-const ForYouRoutesListData = graphql(likedRoutesQuery)(props => {
-    const { error, me } = props.data;
+const SearchRoutesListData = graphql(searchRoutesQuery,
+            {
+                options: (props) => ({ variables: { query: props.query } })
+            }
+    )(props => {
+
+    const { error, routes } = props.data;
 
     if (error) {
+        console.log(error);
         return <Text>err</Text>;
     }
-    if (me) {
+    if (routes) {
         return <List>
-                    {me.likedRoutes.map((value) => {
+                    {routes.map((value) => {
                         return <RouteItem data={value} navigation={props.navigation}/>;
                     })}
                 </List>
@@ -48,16 +53,16 @@ const ForYouRoutesListData = graphql(likedRoutesQuery)(props => {
 });
 
 
-class ForYouRoutesList extends Component {
+class SearchRoutesList extends Component {
 
     render() {
 
         return (
             <ApolloProvider client={client}>
-                <ForYouRoutesListData navigation={this.props.navigation}/>
+                <SearchRoutesListData query={this.props.query} navigation={this.props.navigation}/>
             </ApolloProvider>
         )
     }
 }
 
-export default withNavigation(ForYouRoutesList);
+export default withNavigation(SearchRoutesList);

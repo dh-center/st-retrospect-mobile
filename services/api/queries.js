@@ -7,6 +7,12 @@ export const routesQuery = gql`
         name
         description
         photoLink
+        locations {
+          id
+          name
+          coordinateX
+          coordinateY      
+        }
       }
     }
 `;
@@ -21,6 +27,12 @@ query {
     name
     description
     photoLink
+    locations {
+      id
+      name
+      coordinateX
+      coordinateY      
+    }
   }
 }
 `;
@@ -33,6 +45,12 @@ query {
       name
       description
       photoLink
+      locations {
+          id
+          name
+          coordinateX
+          coordinateY      
+        }
     }
   }
 }
@@ -46,6 +64,46 @@ query {
       name
       description
       photoLink
+      locations {
+          id
+          name
+          coordinateX
+          coordinateY      
+        }
+    }
+  }
+}
+`;
+
+export const searchRoutesQuery = gql`
+ query ($query: String!) {
+  routes(filter: { contains: $query }) {
+    id
+    name
+    description
+    photoLink
+    locations {
+      id
+      name
+      coordinateX
+      coordinateY      
+    }
+  }
+}
+`;
+
+export const routeById = gql`
+ query ($routeId: String!) {
+  route(id:$routeId){
+    id
+    name
+  	description
+    photoLink
+    locations {
+      id
+      name
+      coordinateX
+      coordinateY      
     }
   }
 }

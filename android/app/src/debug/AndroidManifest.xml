@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application android:usesCleartextTraffic="true" tools:targetApi="28" tools:ignore="GoogleAppIndexingWarning">
-            <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCTaokYADDx4-rgm1cKOAcTTHc5OjPyCvU"/>
+            <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB5hRwzheXSWfjV2JyRwH5mwMwwspD64Lo"/>
     </application>
 
 </manifest>

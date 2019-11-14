@@ -30,14 +30,14 @@ import commonColor from '../../theme/variables/commonColor';
 import i18n from 'i18n-js';
 
 const authToken = store.getState().authToken;
-
+const locale = store.getState().locale;
 
 
 const client = new ApolloClient({
     link: new HttpLink({
         uri: routesUrl,
         headers: {
-            "accept-language": i18n.locale,
+            "accept-language": locale,
             "Authorization": "Bearer "+authToken
         }
     }),
