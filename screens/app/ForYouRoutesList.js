@@ -5,7 +5,7 @@ import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {withNavigation} from 'react-navigation';
 
 import {List} from 'native-base';
-import {Text} from 'react-native';
+import {ActivityIndicator, Text} from 'react-native';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
@@ -39,12 +39,12 @@ const ForYouRoutesListData = graphql(likedRoutesQuery)(props => {
     if (me) {
         return <List>
                     {me.likedRoutes.map((value) => {
-                        return <RouteItem data={value} navigation={props.navigation}/>;
+                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
                     })}
                 </List>
     }
 
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator size="small" color="#2d2d2d" />;
 });
 
 

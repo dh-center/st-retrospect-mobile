@@ -51,7 +51,7 @@ export default class Navigation extends Component {
 
     render() {
         let points = [];
-        const GOOGLE_MAPS_APIKEY = 'AIzaSyB5hRwzheXSWfjV2JyRwH5mwMwwspD64Lo';
+        const GOOGLE_API_KEY = 'AIzaSyB5hRwzheXSWfjV2JyRwH5mwMwwspD64Lo';
         const locations = this.props.navigation.getParam('locations');
 
         for(let i = 0; i < locations.length; i++){
@@ -84,7 +84,7 @@ export default class Navigation extends Component {
                         origin={locations[0]}
                         destination={locations[locations.length-1]}
                         waypoints={locations}
-                        apikey={GOOGLE_MAPS_APIKEY}
+                        apikey={GOOGLE_API_KEY}
                         strokeWidth={5}
                         strokeColor="#f6c23d"
                     />
@@ -92,7 +92,7 @@ export default class Navigation extends Component {
 
 
                 </MapView>
-                <ListItem>
+                <ListItem key={this.props.navigation.getParam('name')}>
                     <Body>
                     <H2>{this.props.navigation.getParam('name')}</H2>
                     </Body>
@@ -104,18 +104,12 @@ export default class Navigation extends Component {
                     </Right>
                 </ListItem>
                 <ScrollView style={styles.locationlist}>
-
-
-                    <List
-                        scrollable
-                    >
+                    <List>
                         {locations.map((value) => {
-                            return <ListItem>
-
+                            return <ListItem key={value.latitude}>
                                         <Text>
                                             {value.name}
                                         </Text>
-
                                     </ListItem>;
                         })}
                     </List>

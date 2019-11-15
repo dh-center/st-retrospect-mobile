@@ -278,13 +278,13 @@ export default {
 
     // Tab
     get tabDefaultBg() {
-        return this.brandLight
+        return this.brandDark;
     },
     get topTabBarTextColor() {
-        return '#fff'
+        return '#ffffff'
     },
     get topTabBarActiveTextColor() {
-        return this.brandPrimary
+        return '#ffffff'
     },
     get topTabBarBorderColor () {
         return this.brandLight

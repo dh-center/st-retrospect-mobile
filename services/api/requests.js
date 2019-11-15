@@ -26,7 +26,7 @@ export function sendSignUpRequest(username, password) {
             }
         })
         .catch((error) => {
-            console.error(error);
+            console.log(error);
         });
 }
 

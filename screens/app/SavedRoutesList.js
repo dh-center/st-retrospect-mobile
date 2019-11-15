@@ -19,7 +19,7 @@ import {
     Thumbnail,
     Title,
 } from 'native-base';
-import {Text} from 'react-native';
+import {ActivityIndicator, Text} from 'react-native';
 
 import RouteItem from './RouteItem'
 import {routesUrl} from '../../services/api/endpoints';
@@ -55,12 +55,12 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
     if (me) {
         return <List>
                     {me.savedRoutes.map((value) => {
-                        return <RouteItem data={value} navigation={props.navigation}/>;
+                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
                     })}
                 </List>
     }
 
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator size="small" color="#2d2d2d" />;;
 });
 
 

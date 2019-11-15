@@ -4,24 +4,43 @@ import {ListItem, Left, Right, Body, Thumbnail, H3, Icon, Button} from 'native-b
 import { Text } from 'react-native'
 import i18n from "i18n-js";
 import {store} from '../../data/users/store';
-// import { useApolloClient, useMutation } from '@apollo/react-hooks';
-// import {saveRoute} from '../../services/api/mutations'
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
+import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
+import {saveRoute} from '../../services/api/mutations'
+import {routesUrl} from '../../services/api/endpoints';
 
+const authToken = store.getState().authToken;
 
-// function doSaveRoute() {
-//     const client = useApolloClient();
-//     const [route, { loading, error }] = useMutation(
-//         saveRoute,
-//         {
-//             onCompleted({ route }) {
-//                 console.log('Saved')
-//             }
-//         }
-//     );
-//
-//     if (loading) return <Loading />;
-//     if (error) return <p>An error occurred</p>;
-// }
+const locale = i18n.locale;
+console.log("Locale",locale);
+
+const client = new ApolloClient({
+    link: new HttpLink({
+        uri: routesUrl,
+        headers: {
+            "accept-language":  locale,
+            "Authorization": "Bearer "+authToken
+        }
+    }),
+    cache: new InMemoryCache()
+});
+
+function doSaveRoute(routeId) {
+    const [route, { loading, error }] = useMutation(
+        saveRoute,
+        {variables:
+                {routeId: routeId}
+        },
+        {
+            onCompleted({ route }) {
+                console.log(route)
+            }
+        }
+    );
+
+    if (loading) return <Loading />;
+    if (error) return <p>An error occurred</p>;
+}
 
 class RouteItem extends Component {
 
@@ -46,20 +65,17 @@ class RouteItem extends Component {
             <ListItem
                 avatar
                 button
-                key={this.props.data.id}
                 onPress={() => {this.props.navigation.navigate('Route', {name: this.props.data.name[locale], locations: locations})}}
             >
                 <Left>
                     <Thumbnail source={{ uri: this.props.data.photoLink }} />
                 </Left>
                 <Body>
-                <H3>{ this.props.data.name[locale] }</H3>
-                <Text note>{ this.props.data.description[locale] }</Text>
-
+                    <H3>{ this.props.data.name[locale] }</H3>
+                    <Text note>{ this.props.data.description[locale] }</Text>
                 </Body>
                 <Right>
-                    {/*<Button transparent onPress={() => {doSaveRoute()}}>*/}
-                    <Button transparent>
+                    <Button transparent onPress={() => {doSaveRoute(this.props.data.id)}}>
                         <Icon name='md-star-outline'/>
                     </Button>
                 </Right>

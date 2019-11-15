@@ -58,7 +58,7 @@ const RoutesScreen = createStackNavigator(
         headerBackTitleVisible: false,
         defaultNavigationOptions: ({ navigation }) => ({
             header: <StyleProvider  style={getTheme(commonColor)}>
-                <Header searchBar>
+                <Header>
                     <Left>
                         <DrawerButton navigation={navigation}/>
                     </Left>
