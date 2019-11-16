@@ -51,7 +51,7 @@ export default class Navigation extends Component {
 
     render() {
         let points = [];
-        // const GOOGLE_API_KEY = 'AIzaSyB5hRwzheXSWfjV2JyRwH5mwMwwspD64Lo';
+        const GOOGLE_API_KEY = 'AIzaSyB5hRwzheXSWfjV2JyRwH5mwMwwspD64Lo';
         const locations = this.props.navigation.getParam('locations');
 
         for(let i = 0; i < locations.length; i++){
