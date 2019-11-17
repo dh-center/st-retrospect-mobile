@@ -12,6 +12,9 @@ import {routesUrl} from '../../services/api/endpoints';
 import {savedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import Loader from '../../components/common/Loader';
+import {t} from '../../locales/i18n';
+import View from '../../theme/components/View';
+import {styles} from '../../theme/styles';
 
 const authToken = store.getState().authToken;
 const locale = store.getState().locale;
@@ -38,14 +41,18 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
     }
     if (me) {
         if (me.savedRoutes.length == 0) {
-            return <Text>No saved routes yet</Text>
+            return <View style={styles.centerContent}>
+                    <Text>{t('no-saved')}</Text>
+            </View>
         }
         else {
             return <List>
-                {me.savedRoutes.map((value) => {
-                    return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
-                })}
-            </List>
+                {
+                    me.savedRoutes.map((value) => {
+                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
+                    })
+                }
+                   </List>
         }
     }
 

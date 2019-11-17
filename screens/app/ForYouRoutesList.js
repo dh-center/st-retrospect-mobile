@@ -5,13 +5,15 @@ import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {withNavigation} from 'react-navigation';
 
 import {List} from 'native-base';
-import {ActivityIndicator, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
 import {likedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import Loader from '../../components/common/Loader';
+import {t} from '../../locales/i18n';
+import {styles} from '../../theme/styles';
 
 
 const authToken = store.getState().authToken;
@@ -38,7 +40,9 @@ const ForYouRoutesListData = graphql(likedRoutesQuery)(props => {
     }
     if (me) {
         if (me.likedRoutes.length == 0) {
-            return <Text></Text>
+            return <View style={styles.centerContent}>
+                <Text>{t('no-liked')}</Text>
+            </View>
         }
         else {
             return <List>
@@ -64,5 +68,6 @@ class ForYouRoutesList extends Component {
         )
     }
 }
+
 
 export default withNavigation(ForYouRoutesList);
