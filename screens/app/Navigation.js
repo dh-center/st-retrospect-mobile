@@ -41,7 +41,6 @@ export default class Navigation extends Component {
                         longitude: position.coords.longitude
                     }
                 });
-                console.log(position);
             },
             error =>console.log(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }

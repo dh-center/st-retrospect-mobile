@@ -7,7 +7,6 @@ import {REMOVE_AUTH_TOKEN} from '../../data/users/action_types';
 
 export default class LogOut extends Component {
     onLogOut() {
-        console.log('log out');
         store.dispatch({type: REMOVE_AUTH_TOKEN});
         this.props.navigation.navigate('Auth');
     }

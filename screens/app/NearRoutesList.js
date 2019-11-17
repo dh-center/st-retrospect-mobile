@@ -13,21 +13,6 @@ import {nearRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import Loader from '../../components/common/Loader';
 
-const authToken = store.getState().authToken;
-
-const locale = store.getState().locale;
-
-const client = new ApolloClient({
-    link: new HttpLink({
-        uri: routesUrl,
-        headers: {
-            "accept-language":  locale,
-            "Authorization": "Bearer "+authToken
-        }
-    }),
-    cache: new InMemoryCache()
-});
-
 
 const NearRoutesListData = graphql(nearRoutesQuery)(props => {
 
@@ -50,9 +35,17 @@ const NearRoutesListData = graphql(nearRoutesQuery)(props => {
 
 class NearRoutesList extends Component {
 
-    state = {
-        location: null,
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            authToken: store.getState().authToken,
+            locale : store.getState().locale,
+            location: null
+        };
+
     };
+
 
     findCoordinates = () => {
         Geolocation.getCurrentPosition(
@@ -72,6 +65,16 @@ class NearRoutesList extends Component {
 
     render() {
 
+        const client = new ApolloClient({
+            link: new HttpLink({
+                uri: routesUrl,
+                headers: {
+                    "accept-language":  this.state.locale,
+                    "Authorization": "Bearer "+this.state.authToken
+                }
+            }),
+            cache: new InMemoryCache()
+        });
 
         return (
             <ApolloProvider client={client}>

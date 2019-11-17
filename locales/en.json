@@ -1,4 +1,3 @@
-// en.json
 {
   "routes": "Routes",
   "nearby": "Nearby",
@@ -12,5 +11,5 @@
   "logout": "Log Out",
   "GO": "GO",
   "no-liked": "No liked routes yet. Choose any route and finish it!",
-  "no-saved": "No saved routes yet. Press 'Save' on any route to add it to this list."
+  "no-saved": "No saved routes yet. Press Save on any route to add it to this list."
 }

@@ -31,7 +31,6 @@ export const setI18nConfig = () => {
 
     i18n.translations = { [languageTag]: translationGetters[languageTag]() };
     i18n.locale = languageTag;
-    console.log("i18n, ", languageTag);
     store.dispatch({type: SET_LOCALE, locale: languageTag});
 
 };

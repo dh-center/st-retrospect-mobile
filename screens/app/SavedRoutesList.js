@@ -5,7 +5,7 @@ import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {withNavigation} from 'react-navigation';
 
 import {List} from 'native-base';
-import {ActivityIndicator, Text} from 'react-native';
+import { Text} from 'react-native';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
@@ -13,37 +13,17 @@ import {savedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
-import View from '../../theme/components/View';
-import {styles} from '../../theme/styles';
-
-const authToken = store.getState().authToken;
-const locale = store.getState().locale;
-
-
-const client = new ApolloClient({
-    link: new HttpLink({
-        uri: routesUrl,
-        headers: {
-            "accept-language": locale,
-            "Authorization": "Bearer "+authToken
-        }
-    }),
-    cache: new InMemoryCache()
-});
 
 
 const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
     const { error, me } = props.data;
 
     if (error) {
-        console.log(error);
         return <Text>err</Text>;
     }
     if (me) {
         if (me.savedRoutes.length == 0) {
-            return <View style={styles.centerContent}>
-                    <Text>{t('no-saved')}</Text>
-            </View>
+            return <Text style={{padding: 15}}>{t('no-saved')}</Text>
         }
         else {
             return <List>
@@ -62,7 +42,29 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
 
 class SavedRoutesList extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            authToken: store.getState().authToken,
+            locale : store.getState().locale,
+        };
+
+    };
+
+
     render() {
+
+        const client = new ApolloClient({
+            link: new HttpLink({
+                uri: routesUrl,
+                headers: {
+                    "accept-language":  this.state.locale,
+                    "Authorization": "Bearer "+this.state.authToken
+                }
+            }),
+            cache: new InMemoryCache()
+        });
 
         return (
             <ApolloProvider client={client}>
