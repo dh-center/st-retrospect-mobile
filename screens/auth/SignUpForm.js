@@ -5,6 +5,7 @@ import commonColor from '../../theme/variables/commonColor';
 import {sendLogInRequest, sendSignUpRequest} from '../../services/api/requests';
 import {store} from '../../data/users/store';
 import {SAVE_AUTH_TOKEN} from '../../data/users/action_types';
+import {t} from '../../locales/i18n';
 
 
 export default class SignUpForm extends Component {
@@ -13,7 +14,7 @@ export default class SignUpForm extends Component {
             <StyleProvider  style={getTheme(commonColor)}>
                 <Header>
                     <Body>
-                        <Title>Sign Up</Title>
+                        <Title>{t('signup')}</Title>
                     </Body>
                 </Header>
             </StyleProvider>
@@ -60,31 +61,31 @@ export default class SignUpForm extends Component {
                         <Form>
                             <Item>
                                 <Input
-                                    placeholder="Username"
+                                    placeholder={t('username')}
                                     onChangeText={(username) => this.setState({ username })}
                                 />
                             </Item>
                             <Item>
                                 <Input
-                                    placeholder="Password"
+                                    placeholder={t('password')}
                                     onChangeText={(password) => this.setState({ password })}
                                     secureTextEntry={true}
                                 />
                             </Item>
                             <Item>
                                 <Input
-                                    placeholder="Password once again"
+                                    placeholder={t('repeat-password')}
                                     onChangeText={(passwordCheck) => this.setState({ passwordCheck })}
                                     secureTextEntry={true}
                                 />
                             </Item>
                             <Button
-                                title="Sign Up"
+                                title={t('signup')}
                                 onPress={this.onSignUp.bind(this)}
                                 primary block
                                 style={{margin: 10}}
                             >
-                                <Text>Sign Up</Text>
+                                <Text>{t('signup')}</Text>
                             </Button>
                         </Form>
                     </Content>

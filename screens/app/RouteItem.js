@@ -47,6 +47,8 @@ class RouteItem extends Component {
 
     render() {
 
+        console.log("ForYou, ",locale);
+
         let locations = [];
 
 

@@ -6,6 +6,7 @@ import {store} from '../../data/users/store';
 import i18n from 'i18n-js';
 import {Button, H2, Icon, List, ListItem, Right, Body} from 'native-base';
 import MapViewDirections from 'react-native-maps-directions';
+import {t} from '../../locales/i18n';
 
 const authToken = store.getState().authToken;
 
@@ -105,7 +106,7 @@ export default class Navigation extends Component {
                     </Body>
                     <Right>
                         <Button style={styles.btnCentered}>
-                            <Text>GO</Text>
+                            <Text>{t('GO')}</Text>
 
                         </Button>
                     </Right>

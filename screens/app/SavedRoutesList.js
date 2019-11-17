@@ -11,7 +11,6 @@ import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
 import {savedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
-import i18n from 'i18n-js';
 
 const authToken = store.getState().authToken;
 const locale = store.getState().locale;
@@ -37,11 +36,16 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
         return <Text>err</Text>;
     }
     if (me) {
-        return <List>
-                    {me.savedRoutes.map((value) => {
-                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
-                    })}
-                </List>
+        if (me.savedRoutes == []) {
+            return <Text>No saved routes yet</Text>
+        }
+        else {
+            return <List>
+                {me.savedRoutes.map((value) => {
+                    return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
+                })}
+            </List>
+        }
     }
 
     return <ActivityIndicator size="small" color="#2d2d2d" />;;
@@ -51,7 +55,6 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
 class SavedRoutesList extends Component {
 
     render() {
-
 
         return (
             <ApolloProvider client={client}>

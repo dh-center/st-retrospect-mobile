@@ -69,9 +69,19 @@ const RoutesScreen = createStackNavigator(
 );
 
 const MainDrawer = createDrawerNavigator({
-    Routes: RoutesScreen,
+    Routes: {
+
+        screen: RoutesScreen,
+        navigationOptions: {
+            title: t('routes')
+        }
+    },
     'Log Out': {
+
         screen: LogOut,
+        navigationOptions: {
+            title: t('logout')
+        }
     },
 
 });
@@ -110,7 +120,7 @@ class App extends React.Component {
         super(props);
         setI18nConfig();
         store.dispatch({type: SET_LOCALE, locale: i18n.locale});
-        console.log("App, ",i18n.locale);
+        console.log("App1, ",i18n.locale);
     }
 
     componentDidMount() {
@@ -124,7 +134,7 @@ class App extends React.Component {
     handleLocalizationChange = () => {
         setI18nConfig();
         store.dispatch({type: SET_LOCALE, locale: i18n.locale});
-        console.log("App, ",i18n.locale);
+        console.log("App2, ",i18n.locale);
         this.forceUpdate();
     };
     render() {

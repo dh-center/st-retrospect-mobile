@@ -4,4 +4,11 @@
   "nearby": "Nearby",
   "liked": "Liked",
   "saved": "Saved",
+  "login": "Log In",
+  "username": "Username",
+  "password": "Password",
+  "signup": "Sign Up",
+  "repeat-password": "Password once again",
+  "logout": "Log Out",
+  "GO": "GO"
 }
