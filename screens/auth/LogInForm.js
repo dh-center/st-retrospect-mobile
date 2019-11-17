@@ -16,6 +16,8 @@ import {
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
 import {sendLogInRequest} from '../../services/api/requests';
+import {store} from '../../data/users/store';
+import {SAVE_AUTH_TOKEN} from '../../data/users/action_types';
 
 
 export default class SignUpForm extends Component {
@@ -38,11 +40,22 @@ export default class SignUpForm extends Component {
             password: '',
         };
     };
-    onLogIn() {
+    async onLogIn() {
         const {username, password} = this.state;
         if (username && password) {
-            sendLogInRequest(username, password);
-            this.props.navigation.navigate('App');
+            sendLogInRequest(username, password).then(
+                (result) => {
+                    console.log(result);
+                    if (result == 'Err') {
+                        alert("Credentials are incorrect. Please try again.")
+                    }
+                    else {
+                        store.dispatch({type: SAVE_AUTH_TOKEN, authToken: result.data.accessToken});
+                        this.props.navigation.navigate('App');
+                    }
+                }
+
+            );
         }
     };
     render() {

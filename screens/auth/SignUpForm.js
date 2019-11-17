@@ -3,6 +3,8 @@ import {Container, Content, Form, Item, Input, Button, StyleProvider, Header, Bo
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
 import {sendLogInRequest, sendSignUpRequest} from '../../services/api/requests';
+import {store} from '../../data/users/store';
+import {SAVE_AUTH_TOKEN} from '../../data/users/action_types';
 
 
 export default class SignUpForm extends Component {
@@ -29,9 +31,21 @@ export default class SignUpForm extends Component {
     onSignUp() {
         const { username, password, passwordCheck } = this.state;
         if (username && password && (password == passwordCheck)) {
-            sendSignUpRequest(username, password);
-            sendLogInRequest(username, password);
-            this.props.navigation.navigate('App');
+            sendSignUpRequest(username, password).then(
+                (status) => {
+                    if (status=='Err'){
+                        alert("User already exists. Please try again.")
+                    }
+                    else if (status=='OK'){
+                        sendLogInRequest(username, password).then(
+                            (result) => {
+                                store.dispatch({type: SAVE_AUTH_TOKEN, authToken: result.data.accessToken});
+                                this.props.navigation.navigate('App');
+                            }
+                        );
+                    }
+                }
+            );
         }
         else {
             console.error("No match");
@@ -57,7 +71,7 @@ export default class SignUpForm extends Component {
                                     secureTextEntry={true}
                                 />
                             </Item>
-                            <Item last>
+                            <Item>
                                 <Input
                                     placeholder="Password once again"
                                     onChangeText={(passwordCheck) => this.setState({ passwordCheck })}

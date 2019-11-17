@@ -3,7 +3,7 @@ import {store} from '../../data/users/store';
 import {SAVE_AUTH_TOKEN} from '../../data/users/action_types';
 
 export function sendSignUpRequest(username, password) {
-    fetch(
+    return fetch(
         signUpUrl,
         {
             method: 'POST',
@@ -19,14 +19,14 @@ export function sendSignUpRequest(username, password) {
     )
         .then((response) => {
             if (response.status == 201) {
-                console.log('OK');
+                return 'OK'
             }
             else {
-                console.log(response.status);
+                return 'Err'
             }
         })
-        .catch((error) => {
-            console.log(error);
+        .catch(() => {
+            return 'Err'
         });
 }
 
@@ -35,13 +35,17 @@ export function sendLogInRequest(username, password) {
     const encodedPassword = encodeURIComponent(password);
     const parmsUrl = logInUrl + `?username=${encodedUsername}&password=${encodedPassword}`;
 
-    fetch(parmsUrl)
-        .then((response) => response.json())
-        .then((responseData) => {
-            store.dispatch({type: SAVE_AUTH_TOKEN, authToken: responseData.data.accessToken});
+    return fetch(parmsUrl)
+        .then((response) => {
+            if (response.status == 200){
+                return response.json()
+            }
+            else {
+                return 'Err'
+            }
 
         })
-        .catch((error) => {
-            console.error(error);
+        .catch(() => {
+            return 'Err'
         });
 }
