@@ -11,6 +11,7 @@ import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
 import {likedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
+import Loader from '../../components/common/Loader';
 
 
 const authToken = store.getState().authToken;
@@ -36,14 +37,19 @@ const ForYouRoutesListData = graphql(likedRoutesQuery)(props => {
         return <Text>err</Text>;
     }
     if (me) {
-        return <List>
-                    {me.likedRoutes.map((value) => {
-                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
-                    })}
-                </List>
+        if (me.likedRoutes.length == 0) {
+            return <Text></Text>
+        }
+        else {
+            return <List>
+                {me.likedRoutes.map((value) => {
+                    return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
+                })}
+            </List>
+        }
     }
 
-    return <ActivityIndicator size="small" color="#2d2d2d" />;
+    return <Loader/>
 });
 
 

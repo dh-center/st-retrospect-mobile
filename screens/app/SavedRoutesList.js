@@ -11,6 +11,7 @@ import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
 import {savedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
+import Loader from '../../components/common/Loader';
 
 const authToken = store.getState().authToken;
 const locale = store.getState().locale;
@@ -36,7 +37,7 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
         return <Text>err</Text>;
     }
     if (me) {
-        if (me.savedRoutes == []) {
+        if (me.savedRoutes.length == 0) {
             return <Text>No saved routes yet</Text>
         }
         else {
@@ -48,7 +49,7 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
         }
     }
 
-    return <ActivityIndicator size="small" color="#2d2d2d" />;;
+    return <Loader/>
 });
 
 

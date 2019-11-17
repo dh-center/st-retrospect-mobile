@@ -6,12 +6,12 @@ import {withNavigation} from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
 
 import {List} from 'native-base';
-import {ActivityIndicator, Text} from 'react-native';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
 import {nearRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
+import Loader from '../../components/common/Loader';
 
 const authToken = store.getState().authToken;
 
@@ -44,7 +44,7 @@ const NearRoutesListData = graphql(nearRoutesQuery)(props => {
                 </List>
     }
 
-    return <ActivityIndicator size="small" color="#2d2d2d" />;
+    return <Loader/>
 });
 
 

@@ -12,6 +12,7 @@ import {routesUrl} from '../../services/api/endpoints';
 import {searchRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import i18n from 'i18n-js';
+import Loader from '../../components/common/Loader';
 
 const authToken = store.getState().authToken;
 
@@ -49,7 +50,7 @@ const SearchRoutesListData = graphql(searchRoutesQuery,
                 </List>
     }
 
-    return <ActivityIndicator size="small" color="#2d2d2d" />;
+    return <Loader/>;
 });
 
 

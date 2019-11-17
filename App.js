@@ -23,6 +23,7 @@ import Navigation from './screens/app/Navigation';
 import SearchBar from './components/navigation/SearchBar';
 import i18n from 'i18n-js';
 import {SET_LOCALE} from './data/users/action_types';
+import Loader from './components/common/Loader';
 
 const AuthStack = createStackNavigator({
     LogIn: {
@@ -73,16 +74,16 @@ const MainDrawer = createDrawerNavigator({
 
         screen: RoutesScreen,
         navigationOptions: {
-            title: t('routes')
+            title: t("routes")
         }
     },
     'Log Out': {
 
         screen: LogOut,
         navigationOptions: {
-            title: t('logout')
+            title: t("logout")
         }
-    },
+    }
 
 });
 
