@@ -24,8 +24,8 @@ export default class Navigation extends Component {
         super(props);
         this.state = {
             currentPosition: {
-                latitude: 37.4219981,
-                longitude: -122.084000
+                latitude: 0,
+                longitude: 0
             },
 
         };
@@ -68,6 +68,7 @@ export default class Navigation extends Component {
         points.push(
             <Marker
                 coordinate={this.state.currentPosition}
+                key={locations.length+1}
             >
                 <HereMarker/>
             </Marker>
