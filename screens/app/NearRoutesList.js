@@ -16,8 +16,7 @@ import i18n from 'i18n-js';
 
 const authToken = store.getState().authToken;
 
-const locale = i18n.locale;
-console.log("Locale",locale);
+const locale = store.getState().locale;
 
 const client = new ApolloClient({
     link: new HttpLink({
@@ -73,6 +72,7 @@ class NearRoutesList extends Component {
     }
 
     render() {
+
 
         return (
             <ApolloProvider client={client}>

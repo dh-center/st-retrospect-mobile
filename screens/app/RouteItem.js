@@ -11,8 +11,7 @@ import {routesUrl} from '../../services/api/endpoints';
 
 const authToken = store.getState().authToken;
 
-const locale = i18n.locale;
-console.log("Locale",locale);
+const locale = store.getState().locale;
 
 const client = new ApolloClient({
     link: new HttpLink({
@@ -48,7 +47,6 @@ class RouteItem extends Component {
 
     render() {
 
-        const locale = i18n.locale;
         let locations = [];
 
 
@@ -65,7 +63,11 @@ class RouteItem extends Component {
             <ListItem
                 avatar
                 button
-                onPress={() => {this.props.navigation.navigate('Route', {name: this.props.data.name[locale], locations: locations})}}
+                onPress={() => {this.props.navigation.navigate('Route', {
+                    name: this.props.data.name[locale],
+                    locations: locations,
+                    description: this.props.data.description[locale]
+                })}}
             >
                 <Left>
                     <Thumbnail source={{ uri: this.props.data.photoLink }} />

@@ -9,7 +9,7 @@ import MapViewDirections from 'react-native-maps-directions';
 
 const authToken = store.getState().authToken;
 
-const locale = i18n.locale;
+const locale = store.getState().locale;
 
 const HereMarker = () => {
     return (
@@ -22,7 +22,7 @@ export default class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            initialPosition: {
+            currentPosition: {
                 latitude: 37.4219981,
                 longitude: -122.084000
             },
@@ -35,7 +35,7 @@ export default class Navigation extends Component {
         Geolocation.getCurrentPosition(
             position => {
 
-                this.setState({ initialPosition: {
+                this.setState({ currentPosition: {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
                     }
@@ -64,7 +64,13 @@ export default class Navigation extends Component {
             )
         }
 
-        console.log(locations);
+        points.push(
+            <Marker
+                coordinate={this.state.currentPosition}
+            >
+                <HereMarker/>
+            </Marker>
+        );
 
 
         return (
@@ -74,14 +80,14 @@ export default class Navigation extends Component {
                     provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     initialRegion={{
-                        latitude: locations[0].latitude,
-                        longitude: locations[0].longitude,
+                        latitude: this.state.currentPosition.latitude,
+                        longitude: this.state.currentPosition.longitude,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                     }}
                 >
                     <MapViewDirections
-                        origin={locations[0]}
+                        origin={this.state.currentPosition}
                         destination={locations[locations.length-1]}
                         waypoints={locations}
                         apikey={GOOGLE_API_KEY}
@@ -95,6 +101,7 @@ export default class Navigation extends Component {
                 <ListItem key={this.props.navigation.getParam('name')}>
                     <Body>
                     <H2>{this.props.navigation.getParam('name')}</H2>
+                    <Text>{this.props.navigation.getParam('description')}</Text>
                     </Body>
                     <Right>
                         <Button style={styles.btnCentered}>

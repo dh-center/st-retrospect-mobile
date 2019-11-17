@@ -12,7 +12,6 @@ import {routesUrl} from '../../services/api/endpoints';
 import {likedRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 
-import i18n from 'i18n-js';
 
 const authToken = store.getState().authToken;
 const locale = store.getState().locale;
