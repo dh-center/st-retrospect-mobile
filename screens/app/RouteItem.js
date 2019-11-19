@@ -60,7 +60,8 @@ class RouteItem extends Component {
             locations.push({
                 latitude: this.props.data.locations[i].coordinateX,
                 longitude: this.props.data.locations[i].coordinateY,
-                name: this.props.data.locations[i].name[this.state.locale]
+                name: this.props.data.locations[i].name[this.state.locale],
+                description: this.props.data.locations[i].description[this.state.locale]
             })
         }
 
@@ -69,7 +70,7 @@ class RouteItem extends Component {
             <ListItem
                 avatar
                 button
-                onPress={() => {this.props.navigation.navigate('Route', {
+                onPress={() => {this.props.navigation.navigate('RouteDescription', {
                     name: this.props.data.name[this.state.locale],
                     locations: locations,
                     description: this.props.data.description[this.state.locale]

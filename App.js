@@ -19,10 +19,11 @@ import getTheme from './theme/components';
 import commonColor from './theme/variables/commonColor';
 import {Body, Container, Header, Left, Right, StyleProvider, Title} from 'native-base';
 import HomeScreen from './screens/app/HomeScreen';
-import Navigation from './screens/app/Navigation';
+import RouteDescription from './screens/app/RouteDescription';
 import SearchBar from './components/navigation/SearchBar';
 import i18n from 'i18n-js';
 import {SET_LOCALE} from './data/users/action_types';
+import RouteNavigation from './screens/app/RouteNavigation';
 
 
 const AuthStack = createStackNavigator({
@@ -44,9 +45,13 @@ const AuthStack = createStackNavigator({
 const RoutesScreen = createStackNavigator(
     {
         Home: HomeScreen,
-        Route: {
-            screen: Navigation,
+        RouteDescription: {
+            screen: RouteDescription,
+        },
+        RouteNavigation: {
+            screen: RouteNavigation,
         }
+
     },
     {
         headerMode: 'screen',

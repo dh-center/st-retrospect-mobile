@@ -30,6 +30,7 @@ query {
     locations {
       id
       name
+      description
       coordinateX
       coordinateY      
     }
@@ -48,6 +49,7 @@ query {
       locations {
           id
           name
+          description
           coordinateX
           coordinateY      
         }
@@ -67,6 +69,7 @@ query {
       locations {
           id
           name
+          description
           coordinateX
           coordinateY      
         }
@@ -85,6 +88,7 @@ export const searchRoutesQuery = gql`
     locations {
       id
       name
+      description
       coordinateX
       coordinateY      
     }
@@ -102,6 +106,7 @@ export const routeById = gql`
     locations {
       id
       name
+      description
       coordinateX
       coordinateY      
     }

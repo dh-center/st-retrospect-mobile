@@ -5,6 +5,7 @@ import {
     View,
 } from 'react-native';
 import { store} from '../../data/users/store';
+import Loader from '../../components/common/Loader';
 
 export default class AuthLoadingScreen extends React.Component {
     componentDidMount() {
@@ -15,8 +16,7 @@ export default class AuthLoadingScreen extends React.Component {
     render() {
         return (
             <View>
-                <ActivityIndicator />
-                <StatusBar barStyle="default" />
+                <Loader/>
             </View>
         );
     }
