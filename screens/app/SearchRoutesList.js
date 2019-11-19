@@ -14,21 +14,6 @@ import {store} from '../../data/users/store';
 import i18n from 'i18n-js';
 import Loader from '../../components/common/Loader';
 
-const authToken = store.getState().authToken;
-
-const locale = store.getState().locale;
-
-const client = new ApolloClient({
-    link: new HttpLink({
-        uri: routesUrl,
-        headers: {
-            "accept-language":  locale,
-            "Authorization": "Bearer "+authToken
-        }
-    }),
-    cache: new InMemoryCache()
-});
-
 
 const SearchRoutesListData = graphql(searchRoutesQuery,
             {
@@ -55,8 +40,28 @@ const SearchRoutesListData = graphql(searchRoutesQuery,
 
 
 class SearchRoutesList extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            authToken: store.getState().authToken,
+            locale : store.getState().locale,
+        };
+
+    };
 
     render() {
+
+        const client = new ApolloClient({
+            link: new HttpLink({
+                uri: routesUrl,
+                headers: {
+                    "accept-language":  this.state.locale,
+                    "Authorization": "Bearer "+this.state.authToken
+                }
+            }),
+            cache: new InMemoryCache()
+        });
 
         return (
             <ApolloProvider client={client}>
