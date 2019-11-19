@@ -12,6 +12,8 @@ import {routesUrl} from '../../services/api/endpoints';
 import {nearRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
 import Loader from '../../components/common/Loader';
+import {Text} from 'react-native';
+import {t} from '../../locales/i18n';
 
 
 const NearRoutesListData = graphql(nearRoutesQuery)(props => {
@@ -22,11 +24,16 @@ const NearRoutesListData = graphql(nearRoutesQuery)(props => {
         return <Text>err</Text>;
     }
     if (nearestRoutes) {
-        return <List>
-                    {nearestRoutes.map((value) => {
-                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
-                    })}
-                </List>
+        if (nearestRoutes.length == 0) {
+            return <Text style={{padding: 15}}>{t('no-near')}</Text>
+        }
+        else {
+            return <List>
+                        {nearestRoutes.map((value) => {
+                            return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
+                        })}
+                    </List>
+        }
     }
 
     return <Loader/>

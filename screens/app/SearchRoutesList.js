@@ -1,18 +1,18 @@
-import React, {Component, } from 'react';
+import React, {Component} from 'react';
 
 import {ApolloProvider, graphql} from 'react-apollo';
 import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {withNavigation} from 'react-navigation';
 
 import {List} from 'native-base';
-import {Text, ActivityIndicator} from 'react-native';
+import {Text} from 'react-native';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
 import {searchRoutesQuery} from '../../services/api/queries';
 import {store} from '../../data/users/store';
-import i18n from 'i18n-js';
 import Loader from '../../components/common/Loader';
+import {t} from '../../locales/i18n';
 
 
 const SearchRoutesListData = graphql(searchRoutesQuery,
@@ -28,11 +28,16 @@ const SearchRoutesListData = graphql(searchRoutesQuery,
         return <Text>err</Text>;
     }
     if (routes) {
-        return <List>
-                    {routes.map((value) => {
-                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
-                    })}
-                </List>
+        if (routes.length == 0) {
+            return <Text style={{padding: 15}}>{t('no-search')}</Text>
+        }
+        else {
+            return <List>
+                {routes.map((value) => {
+                    return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
+                })}
+            </List>
+        }
     }
 
     return <Loader/>;

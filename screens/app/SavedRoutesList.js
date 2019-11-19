@@ -5,7 +5,7 @@ import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {withNavigation} from 'react-navigation';
 
 import {List} from 'native-base';
-import { Text} from 'react-native';
+import {Text} from 'react-native';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
