@@ -7,6 +7,7 @@ import i18n from 'i18n-js';
 import {Button, H2, Icon, List, ListItem, Right, Body} from 'native-base';
 import MapViewDirections from 'react-native-maps-directions';
 import {t} from '../../locales/i18n';
+import { GOOGLE_DIRECTIONS_API_KEY } from 'react-native-dotenv'
 
 const authToken = store.getState().authToken;
 
@@ -51,7 +52,6 @@ export default class Navigation extends Component {
 
     render() {
         let points = [];
-        const GOOGLE_API_KEY = 'AIzaSyB5hRwzheXSWfjV2JyRwH5mwMwwspD64Lo';
         const locations = this.props.navigation.getParam('locations');
 
         for(let i = 0; i < locations.length; i++){
@@ -91,7 +91,7 @@ export default class Navigation extends Component {
                         origin={this.state.currentPosition}
                         destination={locations[locations.length-1]}
                         waypoints={locations}
-                        apikey={GOOGLE_API_KEY}
+                        apikey={GOOGLE_DIRECTIONS_API_KEY}
                         strokeWidth={5}
                         strokeColor="#f6c23d"
                     />

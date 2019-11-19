@@ -6,7 +6,11 @@ Mockups: https://marvelapp.com/9d06b61
 
 ### Setup
 
-To run the app, you will need Android Studio installed and a device/emulator.
+1. Create `.env` file at the root of the project with the following content:
+`GOOGLE_DIRECTIONS_API_KEY=<YOUR_KEY>`
+This will be the key used to make requests to Google Directions API. 
+
+2. You will need Android Studio installed and a device/emulator.
 Refer to [React Native docs](https://facebook.github.io/react-native/docs/getting-started).
 
 - List all emulators:
@@ -17,3 +21,4 @@ Refer to [React Native docs](https://facebook.github.io/react-native/docs/gettin
 
 - Run app on emulator/device
 `react-native run-android`
+
