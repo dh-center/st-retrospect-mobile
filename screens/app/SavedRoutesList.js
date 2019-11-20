@@ -19,6 +19,7 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
     const { error, me } = props.data;
 
     if (error) {
+        console.log(error);
         return <Text>err</Text>;
     }
     if (me) {

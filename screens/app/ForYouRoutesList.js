@@ -24,6 +24,7 @@ const ForYouRoutesListData = graphql(likedRoutesQuery)(props => {
     }
     if (me) {
         if (me.likedRoutes.length == 0) {
+            console.log(error);
             return <Text style={{padding: 15}}>{t('no-liked')}</Text>
         }
         else {

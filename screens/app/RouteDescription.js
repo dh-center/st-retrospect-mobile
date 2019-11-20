@@ -1,30 +1,74 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Body, Button, H2, List, ListItem, Right} from 'native-base';
+import {Body, Button, H2, Icon, List, ListItem, Right, Fab} from 'native-base';
 import {t} from '../../locales/i18n';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
 import {MapWithMarkers} from './MapWithMarkers';
+import {saveRoute} from '../../services/api/mutations';
+import Loader from '../../components/common/Loader';
+import { useMutation } from '@apollo/react-hooks';
+import {ApolloProvider} from 'react-apollo';
+import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
+import {routesUrl} from '../../services/api/endpoints';
+import {store} from '../../data/users/store';
+
+
+const SaveButton = ({routeId}) => {
+    const [toggleSave, { loading }] = useMutation(
+        saveRoute,
+        {variables:
+                {routeId: "5db32b6977c44a187bef2c8f"}
+        }
+    );
+
+    if (loading) return <Loader />;
+    return <Button transparent onPress={toggleSave}>
+                <Icon name='md-star-outline'/>
+            </Button>
+};
 
 
 export default class RouteDescription extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            authToken: store.getState().authToken,
+            locale : store.getState().locale,
+        };
+
+    };
+
     render() {
         const locations = this.props.navigation.getParam('locations');
+
+        const client = new ApolloClient({
+            link: new HttpLink({
+                uri: routesUrl,
+                headers: {
+                    "accept-language":  this.state.locale,
+                    "Authorization": "Bearer "+this.state.authToken
+                }
+            }),
+            cache: new InMemoryCache()
+        });
 
         return (
 
             <View style={styles.container}>
                 <MapWithMarkers locations={locations} deltas={{latitudeDelta: 0.015, longitudeDelta: 0.0121}}/>
-                <ListItem key={this.props.navigation.getParam('name')}>
+                <ListItem
+                    key={this.props.navigation.getParam('name')}
+                >
                     <Body>
                     <H2>{this.props.navigation.getParam('name')}</H2>
-                    <Text>{this.props.navigation.getParam('description')}</Text>
+                    <Text note>{this.props.navigation.getParam('description')}</Text>
                     </Body>
                     <Right>
-                        <Button style={styles.btnCentered} onPress={() => this.props.navigation.navigate('RouteNavigation', {locations: locations})}>
-                            <Text>{t('GO')}</Text>
-
-                        </Button>
+                        <ApolloProvider client={client}>
+                            <SaveButton routeId={this.props.navigation.getParam('routeId')}/>
+                        </ApolloProvider>
                     </Right>
                 </ListItem>
                 <ScrollView style={styles.locationlist}>
@@ -38,6 +82,14 @@ export default class RouteDescription extends Component {
                         })}
                     </List>
                 </ScrollView>
+                <Fab
+                    active={true}
+                    direction="up"
+                    position="bottomRight"
+                    style={{backgroundColor: '#f6c23d'}}
+                    onPress={() => this.props.navigation.navigate('RouteNavigation', {locations: locations})}>
+                    <Icon name="md-walk" />
+                </Fab>
             </View>
         )
     }
