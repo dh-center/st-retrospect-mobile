@@ -24,13 +24,12 @@ export default class RouteNavigation extends Component {
                 <MapWithMarkers locations={locations} deltas={{latitudeDelta: 0.005, longitudeDelta: 0.005}}/>
                 <ListItem key={this.props.navigation.getParam('name')}>
                     <Body>
-                    <Text>{t('next-stop')}</Text>
+                    <Text style={{paddingBottom:10}}>{t('next-stop')}</Text>
                     <H2>{this.state.nextLocation.name}</H2>
-                    <Text numberOfLines={2} >{this.state.nextLocation.description}</Text>
                     </Body>
                     <Right>
                         <Button transparent onPress={() => this.props.navigation.navigate('RouteFinish')}>
-                            <Icon name="md-close"/>
+                            <Icon name="md-close-circle"/>
                         </Button>
                     </Right>
                 </ListItem>

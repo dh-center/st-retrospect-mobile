@@ -47,7 +47,7 @@ class RouteItem extends Component {
                 </Left>
                 <Body>
                     <H3>{ this.props.data.name[this.state.locale] }</H3>
-                    <Text note>{ this.props.data.description[this.state.locale] }</Text>
+                    <Text numberOfLines={2} note>{ this.props.data.description[this.state.locale] }</Text>
                 </Body>
             </ListItem>
         )
