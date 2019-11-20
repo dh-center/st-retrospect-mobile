@@ -29,7 +29,7 @@ export default class RouteNavigation extends Component {
                     <Text numberOfLines={2} >{this.state.nextLocation.description}</Text>
                     </Body>
                     <Right>
-                        <Button transparent>
+                        <Button transparent onPress={() => this.props.navigation.navigate('RouteFinish')}>
                             <Icon name="md-close"/>
                         </Button>
                     </Right>

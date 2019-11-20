@@ -24,6 +24,7 @@ import SearchBar from './components/navigation/SearchBar';
 import i18n from 'i18n-js';
 import {SET_LOCALE} from './data/users/action_types';
 import RouteNavigation from './screens/app/RouteNavigation';
+import RouteFinish from './screens/app/RouteFinish';
 
 
 const AuthStack = createStackNavigator({
@@ -50,6 +51,9 @@ const RoutesScreen = createStackNavigator(
         },
         RouteNavigation: {
             screen: RouteNavigation,
+        },
+        RouteFinish: {
+            screen: RouteFinish,
         }
 
     },
