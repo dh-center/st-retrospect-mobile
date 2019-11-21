@@ -28,7 +28,7 @@ export default class RouteNavigation extends Component {
                     <H2>{this.state.nextLocation.name}</H2>
                     </Body>
                     <Right>
-                        <Button transparent onPress={() => this.props.navigation.navigate('RouteFinish')}>
+                        <Button transparent onPress={() => this.props.navigation.navigate('RouteFinish', {routeId: this.props.navigation.getParam('routeId')})}>
                             <Icon name="md-close-circle"/>
                         </Button>
                     </Right>

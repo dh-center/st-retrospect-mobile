@@ -73,8 +73,8 @@ export default class RouteDescription extends Component {
                 </ListItem>
                 <ScrollView style={styles.locationlist}>
                     <List>
-                        {locations.map((value) => {
-                            return <ListItem key={value.latitude}>
+                        {locations.map((value, i) => {
+                            return <ListItem key={i}>
                                         <Text>
                                             {value.name}
                                         </Text>
@@ -87,7 +87,7 @@ export default class RouteDescription extends Component {
                     direction="up"
                     position="bottomRight"
                     style={{backgroundColor: '#f6c23d'}}
-                    onPress={() => this.props.navigation.navigate('RouteNavigation', {locations: locations})}>
+                    onPress={() => this.props.navigation.navigate('RouteNavigation', {locations: locations, routeId: this.props.navigation.getParam('routeId')})}>
                     <Icon name="md-walk" />
                 </Fab>
             </View>

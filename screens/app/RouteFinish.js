@@ -16,7 +16,7 @@ const LikeButton = ({routeId}) => {
     const [toggleLike, { loading }] = useMutation(
         likeRoute,
         {variables:
-                {routeId: "5db32b6977c44a187bef2c8f"}
+                {routeId: routeId}
         }
     );
 
