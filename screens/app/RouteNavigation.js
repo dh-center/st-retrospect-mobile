@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Body, Button, H2, Icon, ListItem, Right} from 'native-base';
 import {t} from '../../locales/i18n';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
 import {MapWithMarkers} from './MapWithMarkers';
 
-
 export default class RouteNavigation extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            nextLocation: this.props.navigation.getParam('locations')[0]
+            nextLocation: this.props.navigation.getParam('locations')[0],
         };
     }
 
@@ -19,22 +17,34 @@ export default class RouteNavigation extends Component {
         const locations = this.props.navigation.getParam('locations');
 
         return (
-
             <View style={styles.container}>
-                <MapWithMarkers locations={locations} deltas={{latitudeDelta: 0.005, longitudeDelta: 0.005}}/>
+                <MapWithMarkers
+                    locations={locations}
+                    deltas={{latitudeDelta: 0.005, longitudeDelta: 0.005}}
+                />
                 <ListItem key={this.props.navigation.getParam('name')}>
                     <Body>
-                    <Text style={{paddingBottom:10}}>{t('next-stop')}</Text>
-                    <H2>{this.state.nextLocation.name}</H2>
+                        <Text style={{paddingBottom: 10}}>
+                            {t('next-stop')}
+                        </Text>
+                        <H2>{this.state.nextLocation.name}</H2>
                     </Body>
                     <Right>
-                        <Button transparent onPress={() => this.props.navigation.navigate('RouteFinish', {routeId: this.props.navigation.getParam('routeId')})}>
-                            <Icon name="md-close-circle"/>
+                        <Button
+                            transparent
+                            onPress={() =>
+                                this.props.navigation.navigate('RouteFinish', {
+                                    routeId: this.props.navigation.getParam(
+                                        'routeId',
+                                    ),
+                                })
+                            }>
+                            <Icon name="md-close-circle" />
                         </Button>
                     </Right>
                 </ListItem>
             </View>
-        )
+        );
     }
 }
 
@@ -43,7 +53,7 @@ const styles = StyleSheet.create({
         flex: 2,
     },
     locationlist: {
-        flex: 1
+        flex: 1,
     },
-    btnCentered: {width: 100, flexDirection: "row", justifyContent: "center"}
+    btnCentered: {width: 100, flexDirection: 'row', justifyContent: 'center'},
 });

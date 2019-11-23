@@ -1,35 +1,32 @@
-import React, { Component } from 'react';
-import { Container, Tabs, Tab, StyleProvider } from 'native-base';
-import NearRoutesList from './NearRoutesList'
+import React, {Component} from 'react';
+import {Container, StyleProvider, Tab, Tabs} from 'native-base';
+import NearRoutesList from './NearRoutesList';
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
 import {t} from '../../locales/i18n';
 import SavedRoutesList from './SavedRoutesList';
 import ForYouRoutesList from './ForYouRoutesList';
 
-
 class HomeScreen extends Component {
-
     render() {
         return (
-            <StyleProvider  style={getTheme(commonColor)}>
+            <StyleProvider style={getTheme(commonColor)}>
                 <Container>
-                    <Tabs >
+                    <Tabs>
                         <Tab textStyle={{color: '#fff'}} heading={t('nearby')}>
-                            <NearRoutesList/>
+                            <NearRoutesList />
                         </Tab>
                         <Tab textStyle={{color: '#fff'}} heading={t('saved')}>
-                            <SavedRoutesList/>
+                            <SavedRoutesList />
                         </Tab>
                         <Tab textStyle={{color: '#fff'}} heading={t('liked')}>
-                            <ForYouRoutesList/>
+                            <ForYouRoutesList />
                         </Tab>
                     </Tabs>
-
                 </Container>
             </StyleProvider>
         );
-    };
+    }
 }
 
-export default HomeScreen
+export default HomeScreen;

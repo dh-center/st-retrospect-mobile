@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text } from 'native-base';
+import React, {Component} from 'react';
+import {Button, Container, Header, Icon, Input, Item, Text} from 'native-base';
 import SearchRoutesList from '../../screens/app/SearchRoutesList';
 
 export default class SearchBar extends Component {
@@ -13,13 +13,16 @@ export default class SearchBar extends Component {
                 <Header searchBar rounded>
                     <Item>
                         <Icon name="search" />
-                        <Input placeholder="Search" onChangeText={(query) => this.setState({query})}/>
+                        <Input
+                            placeholder="Search"
+                            onChangeText={query => this.setState({query})}
+                        />
                     </Item>
                     <Button transparent>
                         <Text>Search</Text>
                     </Button>
                 </Header>
-                <SearchRoutesList query={this.state.query}/>
+                <SearchRoutesList query={this.state.query} />
             </Container>
         );
     }

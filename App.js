@@ -17,7 +17,15 @@ import SearchButton from './components/navigation/SearchButton';
 import DrawerButton from './components/navigation/DrawerButton';
 import getTheme from './theme/components';
 import commonColor from './theme/variables/commonColor';
-import {Body, Container, Header, Left, Right, StyleProvider, Title} from 'native-base';
+import {
+    Body,
+    Container,
+    Header,
+    Left,
+    Right,
+    StyleProvider,
+    Title,
+} from 'native-base';
 import HomeScreen from './screens/app/HomeScreen';
 import RouteDescription from './screens/app/RouteDescription';
 import SearchBar from './components/navigation/SearchBar';
@@ -25,7 +33,6 @@ import i18n from 'i18n-js';
 import {SET_LOCALE} from './data/users/action_types';
 import RouteNavigation from './screens/app/RouteNavigation';
 import RouteFinish from './screens/app/RouteFinish';
-
 
 const AuthStack = createStackNavigator({
     LogIn: {
@@ -39,9 +46,8 @@ const AuthStack = createStackNavigator({
         navigationOptions: {
             headerTitle: 'Create Account',
         },
-    }
+    },
 });
-
 
 const RoutesScreen = createStackNavigator(
     {
@@ -54,36 +60,35 @@ const RoutesScreen = createStackNavigator(
         },
         RouteFinish: {
             screen: RouteFinish,
-        }
-
+        },
     },
     {
         headerMode: 'screen',
         headerBackTitleVisible: false,
-        defaultNavigationOptions: ({ navigation }) => ({
-            header: <StyleProvider  style={getTheme(commonColor)}>
-                <Header>
-                    <Left>
-                        <DrawerButton navigation={navigation}/>
-                    </Left>
-                    <Body>
-                    <Title>{t('routes')}</Title>
-                    </Body>
-                    <Right>
-                        <SearchButton navigation={navigation}/>
-                    </Right>
-                </Header>
-            </StyleProvider>
+        defaultNavigationOptions: ({navigation}) => ({
+            header: (
+                <StyleProvider style={getTheme(commonColor)}>
+                    <Header>
+                        <Left>
+                            <DrawerButton navigation={navigation} />
+                        </Left>
+                        <Body>
+                            <Title>{t('routes')}</Title>
+                        </Body>
+                        <Right>
+                            <SearchButton navigation={navigation} />
+                        </Right>
+                    </Header>
+                </StyleProvider>
+            ),
         }),
-    }
+    },
 );
 
 const MainDrawer = createDrawerNavigator({
     Routes: RoutesScreen,
-    'Log Out': LogOut
+    'Log Out': LogOut,
 });
-
-
 
 const AppModalStack = createStackNavigator(
     {
@@ -91,9 +96,8 @@ const AppModalStack = createStackNavigator(
         Search: SearchBar,
     },
     {
-        headerMode:'none'
-
-    }
+        headerMode: 'none',
+    },
 );
 
 const AppContainer = createAppContainer(
@@ -107,10 +111,8 @@ const AppContainer = createAppContainer(
         App: {
             screen: AppModalStack,
         },
-
-    })
+    }),
 );
-
 
 class App extends React.Component {
     constructor(props) {
@@ -120,11 +122,11 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        RNLocalize.addEventListener("change", this.handleLocalizationChange);
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
     }
 
     componentWillUnmount() {
-        RNLocalize.removeEventListener("change", this.handleLocalizationChange);
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
     }
 
     handleLocalizationChange = () => {
@@ -134,11 +136,11 @@ class App extends React.Component {
     };
     render() {
         return (
-            <StyleProvider  style={getTheme(commonColor)}>
+            <StyleProvider style={getTheme(commonColor)}>
                 <Container>
                     <Provider store={store}>
                         <PersistGate loading={null} persistor={persistor}>
-                            <AppContainer/>
+                            <AppContainer />
                         </PersistGate>
                     </Provider>
                 </Container>

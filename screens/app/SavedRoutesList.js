@@ -14,9 +14,8 @@ import {store} from '../../data/users/store';
 import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 
-
 const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
-    const { error, me } = props.data;
+    const {error, me} = props.data;
 
     if (error) {
         console.log(error);
@@ -24,54 +23,54 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
     }
     if (me) {
         if (me.savedRoutes.length == 0) {
-            return <Text style={{padding: 15}}>{t('no-saved')}</Text>
-        }
-        else {
-            return <List>
-                {
-                    me.savedRoutes.map((value) => {
-                        return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
-                    })
-                }
-                   </List>
+            return <Text style={{padding: 15}}>{t('no-saved')}</Text>;
+        } else {
+            return (
+                <List>
+                    {me.savedRoutes.map(value => {
+                        return (
+                            <RouteItem
+                                key={value.id}
+                                data={value}
+                                navigation={props.navigation}
+                            />
+                        );
+                    })}
+                </List>
+            );
         }
     }
 
-    return <Loader/>
+    return <Loader />;
 });
 
-
 class SavedRoutesList extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
             authToken: store.getState().authToken,
-            locale : store.getState().locale,
+            locale: store.getState().locale,
         };
-
-    };
-
+    }
 
     render() {
-
         const client = new ApolloClient({
             link: new HttpLink({
                 uri: routesUrl,
                 headers: {
-                    "accept-language":  this.state.locale,
-                    "Authorization": "Bearer "+this.state.authToken
-                }
+                    'accept-language': this.state.locale,
+                    Authorization: 'Bearer ' + this.state.authToken,
+                },
             }),
-            cache: new InMemoryCache()
+            cache: new InMemoryCache(),
         });
 
         return (
             <ApolloProvider client={client}>
-                <SavedRoutesListData navigation={this.props.navigation}/>
+                <SavedRoutesListData navigation={this.props.navigation} />
             </ApolloProvider>
-        )
+        );
     }
 }
 

@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import {Container, Text, Button} from 'native-base'
+import {Button, Container, Text} from 'native-base';
 import {store} from '../../data/users/store';
 import {REMOVE_AUTH_TOKEN} from '../../data/users/action_types';
-
 
 export default class LogOut extends Component {
     onLogOut() {
@@ -18,7 +17,6 @@ export default class LogOut extends Component {
                     <Text>Log Out</Text>
                 </Button>
             </Container>
-        )
+        );
     }
-};
-
+}

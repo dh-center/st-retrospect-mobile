@@ -1,47 +1,40 @@
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import MapViewDirections from "react-native-maps-directions";
+import MapViewDirections from 'react-native-maps-directions';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
 import React, {Component} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {Fab, Icon, View} from 'native-base';
 import {StyleSheet} from 'react-native';
 
-const HereMarker = () => {
-    return (
-        <Icon name='navigate'/>
-    )
+const CurrentLocationMarker = () => {
+    return <View style={styles.circle} />;
 };
 
 const LatitudeChangeDelta = 1.5;
 const DistanceFilter = 3;
 
-
 export class MapWithMarkers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
             latitude: 0,
             longitude: 0,
             latitudeDelta: this.props.deltas.latitudeDelta,
-            longitudeDelta: this.props.deltas.longitudeDelta
-
+            longitudeDelta: this.props.deltas.longitudeDelta,
         };
         this.findCoordinates();
     }
 
-
     findCoordinates = () => {
         Geolocation.getCurrentPosition(
             position => {
-
                 this.setState({
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
                 });
             },
-            error =>console.log(error.message),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+            error => console.log(error.message),
+            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
         );
     };
 
@@ -50,12 +43,17 @@ export class MapWithMarkers extends Component {
             position => {
                 this.setState({
                     latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
+                    longitude: position.coords.longitude,
                 });
                 console.log(position.coords);
             },
             error => console.log(error),
-            { enableHighAccuracy: true, timeout: 250, maximumAge: 20, distanceFilter: DistanceFilter }
+            {
+                enableHighAccuracy: true,
+                timeout: 250,
+                maximumAge: 20,
+                distanceFilter: DistanceFilter,
+            },
         );
     };
 
@@ -67,24 +65,22 @@ export class MapWithMarkers extends Component {
         const region = {
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            latitudeDelta: this.state.latitudeDelta/LatitudeChangeDelta,
-            longitudeDelta: this.state.longitudeDelta/LatitudeChangeDelta
-
+            latitudeDelta: this.state.latitudeDelta / LatitudeChangeDelta,
+            longitudeDelta: this.state.longitudeDelta / LatitudeChangeDelta,
         };
         this.setState(region);
-        this.map.animateToRegion(region, 100)
+        this.map.animateToRegion(region, 100);
     }
 
     onPressZoomOut() {
         const region = {
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            latitudeDelta: this.state.latitudeDelta*LatitudeChangeDelta,
-            longitudeDelta: this.state.longitudeDelta*LatitudeChangeDelta
-
+            latitudeDelta: this.state.latitudeDelta * LatitudeChangeDelta,
+            longitudeDelta: this.state.longitudeDelta * LatitudeChangeDelta,
         };
         this.setState(region);
-        this.map.animateToRegion(region, 100)
+        this.map.animateToRegion(region, 100);
     }
 
     MinusButton = () => {
@@ -94,13 +90,12 @@ export class MapWithMarkers extends Component {
                 direction="up"
                 position="bottomRight"
                 style={{
-                    backgroundColor: '#fff'
+                    backgroundColor: '#fff',
                 }}
-                onPress={() => this.onPressZoomOut()}
-            >
+                onPress={() => this.onPressZoomOut()}>
                 <Icon name="md-remove" style={{color: '#f6c23d'}} />
             </Fab>
-        )
+        );
     };
 
     PlusButton = () => {
@@ -110,40 +105,32 @@ export class MapWithMarkers extends Component {
                 direction="up"
                 position="bottomRight"
                 style={{
-                    backgroundColor: '#fff'
+                    backgroundColor: '#fff',
                 }}
                 containerStyle={{bottom: 100}}
-                onPress={() => this.onPressZoomIn()}
-            >
-                <Icon name="md-add" style={{color: '#f6c23d'}}/>
+                onPress={() => this.onPressZoomIn()}>
+                <Icon name="md-add" style={{color: '#f6c23d'}} />
             </Fab>
-        )
+        );
     };
 
     render() {
         let points = [];
         const locations = this.props.locations;
 
-        for(let i = 0; i < locations.length; i++){
-
-            points.push(
-                <Marker
-                    key={i}
-                    coordinate={locations[i]}
-                />
-            )
+        for (let i = 0; i < locations.length; i++) {
+            points.push(<Marker key={i} coordinate={locations[i]} />);
         }
 
         points.push(
             <Marker
                 coordinate={{
                     latitude: this.state.latitude,
-                    longitude: this.state.longitude
+                    longitude: this.state.longitude,
                 }}
-                key={locations.length+1}
-            >
-                <HereMarker/>
-            </Marker>
+                key={locations.length + 1}>
+                <CurrentLocationMarker />
+            </Marker>,
         );
 
         return (
@@ -157,14 +144,13 @@ export class MapWithMarkers extends Component {
                         longitudeDelta: this.state.longitudeDelta,
                     }}
                     style={styles.map}
-                    ref={ref => this.map = ref}
-                >
+                    ref={ref => (this.map = ref)}>
                     <MapViewDirections
                         origin={{
                             latitude: this.state.latitude,
-                            longitude: this.state.longitude
+                            longitude: this.state.longitude,
                         }}
-                        destination={locations[locations.length-1]}
+                        destination={locations[locations.length - 1]}
                         waypoints={locations}
                         apikey={GOOGLE_DIRECTIONS_API_KEY}
                         strokeWidth={5}
@@ -173,15 +159,13 @@ export class MapWithMarkers extends Component {
                         resetOnChange={false}
                     />
                     {points}
-
-
                 </MapView>
-                <this.PlusButton/>
-                <this.MinusButton/>
+                <this.PlusButton />
+                <this.MinusButton />
             </View>
-        )
+        );
     }
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -189,5 +173,13 @@ const styles = StyleSheet.create({
     },
     map: {
         flex: 1,
-    }
+    },
+    circle: {
+        width: 18,
+        height: 18,
+        borderRadius: 18 / 2,
+        backgroundColor: '#f6c23d',
+        borderColor: '#fff',
+        borderWidth: 2,
+    },
 });

@@ -1,13 +1,13 @@
 // @flow
 
 import color from 'color';
-import { Platform, Dimensions, PixelRatio } from 'react-native';
+import {Dimensions, PixelRatio, Platform} from 'react-native';
 
 export const PLATFORM = {
-  ANDROID: 'android',
-  IOS: 'ios',
-  MATERIAL: 'material',
-  WEB: 'web'
+    ANDROID: 'android',
+    IOS: 'ios',
+    MATERIAL: 'material',
+    WEB: 'web',
 };
 
 const deviceHeight = Dimensions.get('window').height;
@@ -15,11 +15,11 @@ const deviceWidth = Dimensions.get('window').width;
 const platform = Platform.OS;
 const platformStyle = undefined;
 const isIphoneX =
-  platform === PLATFORM.IOS &&
-  (deviceHeight === 812 ||
-    deviceWidth === 812 ||
-    deviceHeight === 896 ||
-    deviceWidth === 896);
+    platform === PLATFORM.IOS &&
+    (deviceHeight === 812 ||
+        deviceWidth === 812 ||
+        deviceHeight === 896 ||
+        deviceWidth === 896);
 
 export default {
     platformStyle,
@@ -139,7 +139,6 @@ export default {
     checkboxSize: 20,
     checkboxTickColor: '#fff',
 
-
     // Container
     containerBgColor: '#fff',
 
@@ -171,28 +170,28 @@ export default {
 
     // FooterTab
     get tabBarTextColor() {
-      return this.brandDark
+        return this.brandDark;
     },
     tabBarTextSize: platform === PLATFORM.IOS ? 14 : 11,
-    get activeTab () {
-      return this.brandPrimary
+    get activeTab() {
+        return this.brandPrimary;
     },
     get sTabBarActiveTextColor() {
-        return this.brandPrimary
+        return this.brandPrimary;
     },
     get tabBarActiveTextColor() {
-        return this.brandPrimary
+        return this.brandPrimary;
     },
     get abActiveBgColor() {
-        return this.brandLight
+        return this.brandLight;
     },
 
     // Header
     get toolbarBtnColor() {
-        return '#fff'
+        return '#fff';
     },
     get toolbarDefaultBg() {
-        return this.brandLight
+        return this.brandLight;
     },
     toolbarHeight: platform === PLATFORM.IOS ? 64 : 56,
     toolbarSearchIconSize: platform === PLATFORM.IOS ? 20 : 23,
@@ -200,11 +199,11 @@ export default {
     searchBarHeight: platform === PLATFORM.IOS ? 30 : 40,
     searchBarInputHeight: platform === PLATFORM.IOS ? 30 : 50,
     get toolbarBtnTextColor() {
-        return this.brandDark
+        return this.brandDark;
     },
     iosStatusbar: 'dark-content',
     get toolbarDefaultBorder() {
-        return this.brandLight
+        return this.brandLight;
     },
     get statusBarColor() {
         return color(this.toolbarDefaultBg)
@@ -266,7 +265,8 @@ export default {
 
     // Segment
     segmentBackgroundColor: platform === PLATFORM.IOS ? '#F8F8F8' : '#3F51B5',
-    segmentActiveBackgroundColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
+    segmentActiveBackgroundColor:
+        platform === PLATFORM.IOS ? '#007aff' : '#fff',
     segmentTextColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
     segmentActiveTextColor: platform === PLATFORM.IOS ? '#fff' : '#3F51B5',
     segmentBorderColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
@@ -281,63 +281,63 @@ export default {
         return this.brandDark;
     },
     get topTabBarTextColor() {
-        return '#ffffff'
+        return '#ffffff';
     },
     get topTabBarActiveTextColor() {
-        return '#ffffff'
+        return '#ffffff';
     },
-    get topTabBarBorderColor () {
-        return this.brandLight
+    get topTabBarBorderColor() {
+        return this.brandLight;
     },
     get topTabBarActiveBorderColor() {
-        return this.brandPrimary
+        return this.brandPrimary;
     },
 
-  // Tabs
-  get tabBgColor() {
-      return this.brandLight
-  },
-  tabFontSize: 15,
-
-  // Text
-  textColor: '#000',
-  inverseTextColor: '#fff',
-  noteFontSize: 14,
-  get defaultTextColor() {
-    return this.textColor;
-  },
-
-  // Title
-  titleFontfamily: platform === PLATFORM.IOS ? 'System' : 'Roboto_medium',
-  titleFontSize: platform === PLATFORM.IOS ? 17 : 19,
-  subTitleFontSize: platform === PLATFORM.IOS ? 11 : 14,
-  subtitleColor: platform === PLATFORM.IOS ? '#000' : '#fff',
-  titleFontColor: platform === PLATFORM.IOS ? '#000' : '#fff',
-
-  // Other
-  borderRadiusBase: platform === PLATFORM.IOS ? 5 : 2,
-  borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
-  contentPadding: 10,
-  dropdownLinkColor: '#414142',
-  inputLineHeight: 24,
-  deviceWidth,
-  deviceHeight,
-  isIphoneX,
-  inputGroupRoundedBorderRadius: 30,
-
-  // iPhoneX SafeArea
-  Inset: {
-    portrait: {
-      topInset: 24,
-      leftInset: 0,
-      rightInset: 0,
-      bottomInset: 34
+    // Tabs
+    get tabBgColor() {
+        return this.brandLight;
     },
-    landscape: {
-      topInset: 0,
-      leftInset: 44,
-      rightInset: 44,
-      bottomInset: 21
-    }
-  }
+    tabFontSize: 15,
+
+    // Text
+    textColor: '#000',
+    inverseTextColor: '#fff',
+    noteFontSize: 14,
+    get defaultTextColor() {
+        return this.textColor;
+    },
+
+    // Title
+    titleFontfamily: platform === PLATFORM.IOS ? 'System' : 'Roboto_medium',
+    titleFontSize: platform === PLATFORM.IOS ? 17 : 19,
+    subTitleFontSize: platform === PLATFORM.IOS ? 11 : 14,
+    subtitleColor: platform === PLATFORM.IOS ? '#000' : '#fff',
+    titleFontColor: platform === PLATFORM.IOS ? '#000' : '#fff',
+
+    // Other
+    borderRadiusBase: platform === PLATFORM.IOS ? 5 : 2,
+    borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
+    contentPadding: 10,
+    dropdownLinkColor: '#414142',
+    inputLineHeight: 24,
+    deviceWidth,
+    deviceHeight,
+    isIphoneX,
+    inputGroupRoundedBorderRadius: 30,
+
+    // iPhoneX SafeArea
+    Inset: {
+        portrait: {
+            topInset: 24,
+            leftInset: 0,
+            rightInset: 0,
+            bottomInset: 34,
+        },
+        landscape: {
+            topInset: 0,
+            leftInset: 44,
+            rightInset: 44,
+            bottomInset: 21,
+        },
+    },
 };

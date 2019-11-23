@@ -14,14 +14,10 @@ import {store} from '../../data/users/store';
 import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 
-
-const SearchRoutesListData = graphql(searchRoutesQuery,
-            {
-                options: (props) => ({ variables: { query: props.query } })
-            }
-    )(props => {
-
-    const { error, routes } = props.data;
+const SearchRoutesListData = graphql(searchRoutesQuery, {
+    options: props => ({variables: {query: props.query}}),
+})(props => {
+    const {error, routes} = props.data;
 
     if (error) {
         console.log(error);
@@ -29,20 +25,26 @@ const SearchRoutesListData = graphql(searchRoutesQuery,
     }
     if (routes) {
         if (routes.length == 0) {
-            return <Text style={{padding: 15}}>{t('no-search')}</Text>
-        }
-        else {
-            return <List>
-                {routes.map((value) => {
-                    return <RouteItem key={value.id} data={value} navigation={props.navigation}/>;
-                })}
-            </List>
+            return <Text style={{padding: 15}}>{t('no-search')}</Text>;
+        } else {
+            return (
+                <List>
+                    {routes.map(value => {
+                        return (
+                            <RouteItem
+                                key={value.id}
+                                data={value}
+                                navigation={props.navigation}
+                            />
+                        );
+                    })}
+                </List>
+            );
         }
     }
 
-    return <Loader/>;
+    return <Loader />;
 });
-
 
 class SearchRoutesList extends Component {
     constructor(props) {
@@ -50,29 +52,30 @@ class SearchRoutesList extends Component {
 
         this.state = {
             authToken: store.getState().authToken,
-            locale : store.getState().locale,
+            locale: store.getState().locale,
         };
-
-    };
+    }
 
     render() {
-
         const client = new ApolloClient({
             link: new HttpLink({
                 uri: routesUrl,
                 headers: {
-                    "accept-language":  this.state.locale,
-                    "Authorization": "Bearer "+this.state.authToken
-                }
+                    'accept-language': this.state.locale,
+                    Authorization: 'Bearer ' + this.state.authToken,
+                },
             }),
-            cache: new InMemoryCache()
+            cache: new InMemoryCache(),
         });
 
         return (
             <ApolloProvider client={client}>
-                <SearchRoutesListData query={this.props.query} navigation={this.props.navigation}/>
+                <SearchRoutesListData
+                    query={this.props.query}
+                    navigation={this.props.navigation}
+                />
             </ApolloProvider>
-        )
+        );
     }
 }
 

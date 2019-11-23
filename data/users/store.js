@@ -1,8 +1,7 @@
-import { createStore } from 'redux'
-import appFlow from './reducers'
-import { persistStore, persistReducer } from 'redux-persist';
+import {createStore} from 'redux';
+import appFlow from './reducers';
+import {persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
-
 
 const persistConfig = {
     key: 'root',
