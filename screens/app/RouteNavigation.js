@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Alert} from 'react-native';
 import {Body, Button, H2, Icon, ListItem, Right} from 'native-base';
 import {t} from '../../locales/i18n';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
@@ -43,6 +43,19 @@ export default class RouteNavigation extends Component {
         this.props.navigation.navigate('RouteFinish', {
             routeId: this.props.navigation.getParam('routeId'),
         });
+    };
+
+    showInfo = () => {
+        Alert.alert(
+            this.getNextLocation().name,
+            this.getNextLocation().description,
+            [
+                {
+                    text: 'Back to route',
+                    style: 'cancel',
+                },
+            ],
+        );
     };
 
     updateNextLocation = () => {
@@ -106,9 +119,13 @@ export default class RouteNavigation extends Component {
                         <H2>{this.getNextLocation().name}</H2>
                     </Body>
                     <Right>
+                        <Button transparent onPress={() => this.showInfo()}>
+                            <Icon name="md-information-circle-outline" />
+                        </Button>
                         <Button transparent onPress={() => this.finishRoute()}>
                             <Icon name="md-close-circle" />
                         </Button>
+
                     </Right>
                 </ListItem>
             </View>
