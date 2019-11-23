@@ -5,7 +5,7 @@ import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {withNavigation} from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
 
-import {List} from 'native-base';
+import {List, View} from 'native-base';
 
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
@@ -16,11 +16,21 @@ import {Text} from 'react-native';
 import {t} from '../../locales/i18n';
 
 
-const NearRoutesListData = graphql(nearRoutesQuery)(props => {
+const NearRoutesListData = graphql(nearRoutesQuery,
+        {
+            options: (props) => ({ variables:
+                    {
+                        latitude: props.latitude,
+                        longitude: props.longitude
+                    }
+            })
+        }
+    )(props => {
 
     const { error, nearestRoutes } = props.data;
 
     if (error) {
+        console.log(error);
         return <Text>err</Text>;
     }
     if (nearestRoutes) {
@@ -48,18 +58,17 @@ class NearRoutesList extends Component {
         this.state = {
             authToken: store.getState().authToken,
             locale : store.getState().locale,
-            location: null
+            latitude: null,
+            longitude: null
         };
-
     };
 
 
     findCoordinates = () => {
         Geolocation.getCurrentPosition(
             position => {
-                const location = JSON.stringify(position);
-
-                this.setState({ location });
+                const location = position.coords;
+                this.setState({ latitude: location.latitude, longitude: location.longitude });
             },
             error =>console.log(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -82,11 +91,14 @@ class NearRoutesList extends Component {
             }),
             cache: new InMemoryCache()
         });
-
         return (
-            <ApolloProvider client={client}>
-                <NearRoutesListData location={this.state.location} navigation={this.props.navigation}/>
-            </ApolloProvider>
+            <View>
+                {this.state.latitude && this.state.longitude &&
+                    <ApolloProvider client={client}>
+                        <NearRoutesListData latitude={this.state.latitude} longitude={this.state.longitude} navigation={this.props.navigation}/>
+                    </ApolloProvider>
+                }
+            </View>
         )
     }
 }

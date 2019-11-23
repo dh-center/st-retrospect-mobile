@@ -13,6 +13,7 @@ const HereMarker = () => {
 };
 
 const LatitudeChangeDelta = 1.5;
+const DistanceFilter = 3;
 
 
 export class MapWithMarkers extends Component {
@@ -29,39 +30,6 @@ export class MapWithMarkers extends Component {
         this.findCoordinates();
     }
 
-    PlusButton = () => {
-        return (
-            <Fab
-                active={true}
-                direction="up"
-                position="bottomRight"
-                style={{
-                    backgroundColor: '#fff'
-                }}
-                containerStyle={{bottom: 100}}
-                onPress={() => this.onPressZoomIn()}
-            >
-                <Icon name="md-add" style={{color: '#f6c23d'}}/>
-            </Fab>
-        )
-    };
-
-
-    MinusButton = () => {
-        return (
-            <Fab
-                active={true}
-                direction="up"
-                position="bottomRight"
-                style={{
-                    backgroundColor: '#fff'
-                }}
-                onPress={() => this.onPressZoomOut()}
-            >
-                <Icon name="md-remove" style={{color: '#f6c23d'}} />
-            </Fab>
-        )
-    };
 
     findCoordinates = () => {
         Geolocation.getCurrentPosition(
@@ -87,7 +55,7 @@ export class MapWithMarkers extends Component {
                 console.log(position.coords);
             },
             error => console.log(error),
-            { enableHighAccuracy: true, timeout: 250, maximumAge: 20 }
+            { enableHighAccuracy: true, timeout: 250, maximumAge: 20, distanceFilter: DistanceFilter }
         );
     };
 
@@ -118,6 +86,39 @@ export class MapWithMarkers extends Component {
         this.setState(region);
         this.map.animateToRegion(region, 100)
     }
+
+    MinusButton = () => {
+        return (
+            <Fab
+                active={true}
+                direction="up"
+                position="bottomRight"
+                style={{
+                    backgroundColor: '#fff'
+                }}
+                onPress={() => this.onPressZoomOut()}
+            >
+                <Icon name="md-remove" style={{color: '#f6c23d'}} />
+            </Fab>
+        )
+    };
+
+    PlusButton = () => {
+        return (
+            <Fab
+                active={true}
+                direction="up"
+                position="bottomRight"
+                style={{
+                    backgroundColor: '#fff'
+                }}
+                containerStyle={{bottom: 100}}
+                onPress={() => this.onPressZoomIn()}
+            >
+                <Icon name="md-add" style={{color: '#f6c23d'}}/>
+            </Fab>
+        )
+    };
 
     render() {
         let points = [];
@@ -169,6 +170,7 @@ export class MapWithMarkers extends Component {
                         strokeWidth={5}
                         strokeColor="#f6c23d"
                         mode="WALKING"
+                        resetOnChange={false}
                     />
                     {points}
 

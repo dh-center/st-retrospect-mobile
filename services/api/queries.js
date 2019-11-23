@@ -18,9 +18,9 @@ export const routesQuery = gql`
 `;
 
 export const nearRoutesQuery = gql`
-query {
+query ($latitude: Float!, $longitude: Float!) {
   nearestRoutes(
-    center: { latitude: 59.972401, longitude: 30.302212 }
+    center: { latitude: $latitude, longitude: $longitude }
     radius: 4000
   ) {
     id
