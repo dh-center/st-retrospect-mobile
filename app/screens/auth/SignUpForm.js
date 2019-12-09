@@ -15,8 +15,7 @@ import {
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
 import {sendLogInRequest, sendSignUpRequest} from '../../services/api/requests';
-import {store} from '../../redux/users/store';
-import {SAVE_AUTH_TOKEN} from '../../redux/users/action_types';
+import {store} from '../../redux/store';
 import {t} from '../../locales/i18n';
 
 export default class SignUpForm extends Component {
@@ -49,7 +48,7 @@ export default class SignUpForm extends Component {
                 } else if (status == 'OK') {
                     sendLogInRequest(username, password).then(result => {
                         store.dispatch({
-                            type: SAVE_AUTH_TOKEN,
+                            type: 'SAVE_AUTH_TOKEN',
                             authToken: result.data.accessToken,
                         });
                         this.props.navigation.navigate('App');

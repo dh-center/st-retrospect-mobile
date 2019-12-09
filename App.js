@@ -2,20 +2,19 @@ import React from 'react';
 import {PersistGate} from 'redux-persist/integration/react';
 import * as RNLocalize from 'react-native-localize';
 import {setI18nConfig} from './app/locales/i18n';
-import {persistor, store} from './app/redux/users/store';
+import {persistor, store} from './app/redux/store';
 import {Provider} from 'react-redux';
 import getTheme from './app/theme/components';
 import commonColor from './app/theme/variables/commonColor';
 import {Container, StyleProvider} from 'native-base';
 import i18n from 'i18n-js';
-import {SET_LOCALE} from './app/redux/users/action_types';
 import {AppContainer} from './app/routes/index';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         setI18nConfig();
-        store.dispatch({type: SET_LOCALE, locale: i18n.locale});
+        store.dispatch({type: 'SET_LOCALE', locale: i18n.locale});
     }
 
     componentDidMount() {

@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 
 import {Button, Container, Text} from 'native-base';
-import {store} from '../../redux/users/store';
-import {REMOVE_AUTH_TOKEN} from '../../redux/users/action_types';
+import {store} from '../../redux/store';
 
 export default class LogOut extends Component {
     onLogOut() {
-        store.dispatch({type: REMOVE_AUTH_TOKEN});
+        store.dispatch({type: 'REMOVE_AUTH_TOKEN'});
         this.props.navigation.navigate('Auth');
     }
     render() {

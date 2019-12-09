@@ -1,3 +1,0 @@
-export const SAVE_AUTH_TOKEN = 'SAVE_AUTH_TOKEN';
-export const REMOVE_AUTH_TOKEN = 'REMOVE_AUTH_TOKEN';
-export const SET_LOCALE = 'SET_LOCALE';

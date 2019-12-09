@@ -9,7 +9,7 @@ import {useMutation} from '@apollo/react-hooks';
 import {ApolloProvider} from 'react-apollo';
 import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {routesUrl} from '../../services/api/endpoints';
-import {store} from '../../redux/users/store';
+import {store} from '../../redux/store';
 
 const SaveButton = ({routeId}) => {
     const [toggleSave, {loading}] = useMutation(saveRoute, {

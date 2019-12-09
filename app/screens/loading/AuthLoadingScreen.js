@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {store} from '../../redux/users/store';
+import {store} from '../../redux/store';
 import Loader from '../../components/common/Loader';
 
 export default class AuthLoadingScreen extends React.Component {

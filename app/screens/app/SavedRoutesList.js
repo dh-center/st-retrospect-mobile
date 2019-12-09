@@ -10,7 +10,7 @@ import {Text} from 'react-native';
 import RouteItem from './RouteItem';
 import {routesUrl} from '../../services/api/endpoints';
 import {savedRoutesQuery} from '../../services/api/queries';
-import {store} from '../../redux/users/store';
+import {store} from '../../redux/store';
 import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 

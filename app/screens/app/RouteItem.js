@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import {Body, H3, Left, ListItem, Thumbnail} from 'native-base';
 import {Text} from 'react-native';
-import {store} from '../../redux/users/store';
+import {store} from '../../redux/store';
 
 class RouteItem extends Component {
     constructor(props) {

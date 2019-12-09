@@ -15,8 +15,7 @@ import {
 import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
 import {sendLogInRequest} from '../../services/api/requests';
-import {store} from '../../redux/users/store';
-import {SAVE_AUTH_TOKEN} from '../../redux/users/action_types';
+import {store} from '../../redux/store';
 import {t} from '../../locales/i18n';
 
 export default class SignUpForm extends Component {
@@ -47,7 +46,7 @@ export default class SignUpForm extends Component {
                     alert('Credentials are incorrect. Please try again.');
                 } else {
                     store.dispatch({
-                        type: SAVE_AUTH_TOKEN,
+                        type: 'SAVE_AUTH_TOKEN',
                         authToken: result.data.accessToken,
                     });
                     this.props.navigation.navigate('App');

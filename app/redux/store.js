@@ -1,5 +1,5 @@
 import {createStore} from 'redux';
-import appFlow from './reducers';
+import appFlow from './reducers/reducers';
 import {persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 
