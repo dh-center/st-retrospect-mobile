@@ -5,7 +5,7 @@ import getTheme from '../../theme/components/index';
 import commonColor from '../../theme/variables/commonColor';
 import {t} from '../../locales/i18n';
 import SavedRoutesList from './SavedRoutesList';
-import ForYouRoutesList from './ForYouRoutesList';
+import ForYouRoutesList from './LikedRoutesList';
 
 class HomeScreen extends Component {
     render() {
