@@ -24,7 +24,7 @@ const SearchRoutesListData = graphql(searchRoutesQuery, {
         return <Text>err</Text>;
     }
     if (routes) {
-        if (routes.length == 0) {
+        if (routes.length === 0) {
             return <Text style={{padding: 15}}>{t('no-search')}</Text>;
         } else {
             return (
