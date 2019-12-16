@@ -1,3 +1,5 @@
+import i18n from 'i18n-js';
+
 export const routesListInitialState = {
     isFetching: false,
 
@@ -7,3 +9,7 @@ export const routesListInitialState = {
 
     items: [],
 };
+
+export const localeInitialState = i18n.locale;
+
+export const authTokenInitialState = '';

@@ -1,6 +1,6 @@
-import i18n from 'i18n-js';
+import {localeInitialState} from './initialStates';
 
-export function locale(state = i18n.locale, action) {
+export function locale(state = localeInitialState, action) {
     switch (action.type) {
         case 'SET_LOCALE':
             return action.locale;
