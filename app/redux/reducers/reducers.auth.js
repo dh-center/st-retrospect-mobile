@@ -1,9 +1,9 @@
-export function authToken(state = "", action) {
+export function authToken(state = {}, action) {
     switch (action.type) {
-        case "SAVE_AUTH_TOKEN":
-            return action.authToken;
-        case "REMOVE_AUTH_TOKEN":
-            return "";
+        case 'SAVE_AUTH_TOKEN':
+            return {...state, authToken: action.authToken};
+        case 'REMOVE_AUTH_TOKEN':
+            return {...state};
         default:
             return state;
     }

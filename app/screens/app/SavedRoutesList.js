@@ -47,12 +47,16 @@ const SavedRoutesListData = graphql(savedRoutesQuery)(props => {
 class SavedRoutesList extends Component {
     constructor(props) {
         super(props);
+        store.dispatch({type: 'FETCH_SAVED_ROUTES'});
 
         this.state = {
             authToken: store.getState().authToken,
             locale: store.getState().locale,
+            savedRoutes: store.getState().routesList.savedRoutes,
         };
     }
+
+    componentDidMount() {}
 
     render() {
         const client = new ApolloClient({
