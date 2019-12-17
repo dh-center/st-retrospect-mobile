@@ -1,67 +1,26 @@
 import React, {Component} from 'react';
-
-import {ApolloProvider, graphql} from 'react-apollo';
-import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {withNavigation} from 'react-navigation';
+import {List} from 'native-base';
+import {Text} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 
-import {List, View} from 'native-base';
-
 import RouteItem from './RouteItem';
-import {routesUrl} from '../../services/api/endpoints';
-import {nearRoutesQuery} from '../../services/api/queries';
 import {store} from '../../redux/store';
 import Loader from '../../components/common/Loader';
-import {Text} from 'react-native';
 import {t} from '../../locales/i18n';
-
-const NearRoutesListData = graphql(nearRoutesQuery, {
-    options: props => ({
-        variables: {
-            latitude: props.latitude,
-            longitude: props.longitude,
-        },
-    }),
-})(props => {
-    const {error, nearestRoutes} = props.data;
-
-    if (error) {
-        console.log(error);
-        return <Text>err</Text>;
-    }
-    if (nearestRoutes) {
-        if (nearestRoutes.length == 0) {
-            return <Text style={{padding: 15}}>{t('no-near')}</Text>;
-        } else {
-            return (
-                <List>
-                    {nearestRoutes.map(value => {
-                        return (
-                            <RouteItem
-                                key={value.id}
-                                data={value}
-                                navigation={props.navigation}
-                            />
-                        );
-                    })}
-                </List>
-            );
-        }
-    }
-
-    return <Loader />;
-});
+import {fetchNearRoutes} from '../../redux/actions/actions.nearRoutes';
 
 class NearRoutesList extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             authToken: store.getState().authToken,
             locale: store.getState().locale,
             latitude: null,
             longitude: null,
+            nearRoutes: store.getState().nearRoutes,
         };
+        this.findCoordinates();
     }
 
     findCoordinates = () => {
@@ -71,41 +30,47 @@ class NearRoutesList extends Component {
                 this.setState({
                     latitude: location.latitude,
                     longitude: location.longitude,
+                    nearRoutes: store.getState().nearRoutes,
                 });
+                this.fetchRoutes();
             },
             error => console.log(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
         );
     };
 
-    componentDidMount() {
-        this.findCoordinates();
+    fetchRoutes() {
+        store
+            .dispatch(
+                fetchNearRoutes(this.state.latitude, this.state.longitude),
+            )
+            .then(() =>
+                this.setState({nearRoutes: store.getState().nearRoutes}),
+            );
     }
 
     render() {
-        const client = new ApolloClient({
-            link: new HttpLink({
-                uri: routesUrl,
-                headers: {
-                    'accept-language': this.state.locale,
-                    Authorization: 'Bearer ' + this.state.authToken,
-                },
-            }),
-            cache: new InMemoryCache(),
-        });
-        return (
-            <View>
-                {this.state.latitude && this.state.longitude && (
-                    <ApolloProvider client={client}>
-                        <NearRoutesListData
-                            latitude={this.state.latitude}
-                            longitude={this.state.longitude}
-                            navigation={this.props.navigation}
-                        />
-                    </ApolloProvider>
-                )}
-            </View>
-        );
+        if (this.state.nearRoutes.isFetching) {
+            return <Loader />;
+        } else {
+            if (store.getState().nearRoutes.items.length === 0) {
+                return <Text>{t('no-near')}</Text>;
+            } else {
+                return (
+                    <List>
+                        {store.getState().nearRoutes.items.map(value => {
+                            return (
+                                <RouteItem
+                                    key={value.id}
+                                    data={value}
+                                    navigation={this.props.navigation}
+                                />
+                            );
+                        })}
+                    </List>
+                );
+            }
+        }
     }
 }
 
