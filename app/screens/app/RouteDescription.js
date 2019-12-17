@@ -1,28 +1,13 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Body, Button, Fab, H2, Icon, List, ListItem, Right} from 'native-base';
-import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
 import {MapWithMarkers} from './MapWithMarkers';
-import {saveRoute} from '../../services/api/mutations';
-import Loader from '../../components/common/Loader';
-import {useMutation} from '@apollo/react-hooks';
-import {ApolloProvider} from 'react-apollo';
-import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
-import {routesUrl} from '../../services/api/endpoints';
 import {store} from '../../redux/store';
-
-const SaveButton = ({routeId}) => {
-    const [toggleSave, {loading}] = useMutation(saveRoute, {
-        variables: {routeId: '5db32b6977c44a187bef2c8f'},
-    });
-
-    if (loading) return <Loader />;
-    return (
-        <Button transparent onPress={toggleSave}>
-            <Icon name="md-star-outline" />
-        </Button>
-    );
-};
+import {
+    mutateRouteSave,
+    mutateRouteUnsave,
+} from '../../redux/actions/actions.mutateRoute';
+import {fetchSavedRoutes} from '../../redux/actions/actions.savedRoutes';
 
 export default class RouteDescription extends Component {
     constructor(props) {
@@ -31,22 +16,54 @@ export default class RouteDescription extends Component {
         this.state = {
             authToken: store.getState().authToken,
             locale: store.getState().locale,
+            isSaved: this.defineIsSaved(),
         };
+
+        this.saveRoute = this.saveRoute.bind(this);
+        this.unsaveRoute = this.unsaveRoute.bind(this);
+    }
+
+    defineIsSaved() {
+        const savedRoutes = store.getState().savedRoutes.items;
+        let filteredRoutes = savedRoutes.filter(
+            route => (route.id = this.props.navigation.getParam('routeId')),
+        );
+        return filteredRoutes.length !== 0;
+    }
+
+    saveRoute() {
+        store.dispatch(
+            mutateRouteSave(this.props.navigation.getParam('routeId')),
+        );
+        this.setState({isSaved: true});
+        store.dispatch(fetchSavedRoutes());
+    }
+
+    unsaveRoute() {
+        store.dispatch(
+            mutateRouteUnsave(this.props.navigation.getParam('routeId')),
+        );
+        this.setState({isSaved: false});
+        store.dispatch(fetchSavedRoutes());
     }
 
     render() {
         const locations = this.props.navigation.getParam('locations');
+        let saveButton;
 
-        const client = new ApolloClient({
-            link: new HttpLink({
-                uri: routesUrl,
-                headers: {
-                    'accept-language': this.state.locale,
-                    Authorization: 'Bearer ' + this.state.authToken,
-                },
-            }),
-            cache: new InMemoryCache(),
-        });
+        if (this.state.isSaved) {
+            saveButton = (
+                <Button transparent onPress={this.unsaveRoute}>
+                    <Icon name="md-star" />
+                </Button>
+            );
+        } else {
+            saveButton = (
+                <Button transparent onPress={this.saveRoute}>
+                    <Icon name="md-star-outline" />
+                </Button>
+            );
+        }
 
         return (
             <View style={styles.container}>
@@ -61,15 +78,7 @@ export default class RouteDescription extends Component {
                             {this.props.navigation.getParam('description')}
                         </Text>
                     </Body>
-                    <Right>
-                        <ApolloProvider client={client}>
-                            <SaveButton
-                                routeId={this.props.navigation.getParam(
-                                    'routeId',
-                                )}
-                            />
-                        </ApolloProvider>
-                    </Right>
+                    <Right>{saveButton}</Right>
                 </ListItem>
                 <ScrollView style={styles.locationlist}>
                     <List>

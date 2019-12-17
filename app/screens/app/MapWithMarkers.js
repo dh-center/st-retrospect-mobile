@@ -45,7 +45,6 @@ export class MapWithMarkers extends Component {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
                 });
-                console.log(position.coords);
             },
             error => console.log(error),
             {
