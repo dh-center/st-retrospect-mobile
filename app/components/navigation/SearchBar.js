@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Container, Header, Icon, Input, Item, Text} from 'native-base';
-import SearchRoutesList from '../../screens/app/SearchRoutesList';
+import SearchedRoutesList from '../../screens/app/SearchedRoutesList';
 
 export default class SearchBar extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ export default class SearchBar extends Component {
                         <Text>Search</Text>
                     </Button>
                 </Header>
-                <SearchRoutesList query={this.state.query} />
+                <SearchedRoutesList query={this.state.query} />
             </Container>
         );
     }
