@@ -11,6 +11,7 @@ import {
     fetchSearchedRoutes,
     INVALIDATE_SEARCHED_ROUTES,
 } from '../../redux/actions/actions.searchedRoutes';
+import {styles} from '../../theme/styles';
 
 class SearchedRoutesList extends Component {
     constructor(props) {
@@ -23,13 +24,11 @@ class SearchedRoutesList extends Component {
     }
 
     fetchRoutes() {
-        store
-            .dispatch(fetchSearchedRoutes(this.props.query))
-            .then(() =>
-                this.setState({
-                    searchedRoutes: store.getState().searchedRoutes,
-                }),
-            );
+        store.dispatch(fetchSearchedRoutes(this.props.query)).then(() =>
+            this.setState({
+                searchedRoutes: store.getState().searchedRoutes,
+            }),
+        );
     }
 
     componentDidUpdate(prevProps) {
@@ -44,7 +43,9 @@ class SearchedRoutesList extends Component {
             return <Loader />;
         } else {
             if (store.getState().searchedRoutes.items.length === 0) {
-                return <Text>{t('no-search')}</Text>;
+                return (
+                    <Text style={styles.emptyMessage}>{t('no-search')}</Text>
+                );
             } else {
                 return (
                     <List>

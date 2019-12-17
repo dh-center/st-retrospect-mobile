@@ -9,6 +9,7 @@ import {store} from '../../redux/store';
 import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 import {fetchNearRoutes} from '../../redux/actions/actions.nearRoutes';
+import {styles} from '../../theme/styles';
 
 class NearRoutesList extends Component {
     constructor(props) {
@@ -54,7 +55,7 @@ class NearRoutesList extends Component {
             return <Loader />;
         } else {
             if (store.getState().nearRoutes.items.length === 0) {
-                return <Text>{t('no-near')}</Text>;
+                return <Text style={styles.emptyMessage}>{t('no-near')}</Text>;
             } else {
                 return (
                     <List>

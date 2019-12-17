@@ -8,6 +8,7 @@ import {store} from '../../redux/store';
 import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 import {fetchLikedRoutes} from '../../redux/actions/actions.likedRoutes';
+import {styles} from '../../theme/styles';
 
 class LikedRoutesList extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class LikedRoutesList extends Component {
             return <Loader />;
         } else {
             if (this.state.likedRoutes.items.length === 0) {
-                return <Text>{t('no-liked')}</Text>;
+                return <Text style={styles.emptyMessage}>{t('no-liked')}</Text>;
             } else {
                 return (
                     <List>

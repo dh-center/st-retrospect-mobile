@@ -7,4 +7,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    emptyMessage: {
+        padding: 15,
+        fontSize: 16,
+    },
 });

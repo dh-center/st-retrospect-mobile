@@ -8,6 +8,7 @@ import {store} from '../../redux/store';
 import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 import {fetchSavedRoutes} from '../../redux/actions/actions.savedRoutes';
+import {styles} from '../../theme/styles';
 
 class SavedRoutesList extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class SavedRoutesList extends Component {
             return <Loader />;
         } else {
             if (this.state.savedRoutes.items.length === 0) {
-                return <Text>{t('no-saved')}</Text>;
+                return <Text style={styles.emptyMessage}>{t('no-saved')}</Text>;
             } else {
                 return (
                     <List>
