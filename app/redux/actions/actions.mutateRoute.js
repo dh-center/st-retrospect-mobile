@@ -9,6 +9,7 @@ import {INVALIDATE_SAVED_ROUTES} from './actions.savedRoutes';
 import {INVALIDATE_LIKED_ROUTES} from './actions.likedRoutes';
 import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {routesUrl} from '../../services/api/endpoints';
+import {likedRoutesQuery, savedRoutesQuery} from '../../services/api/queries';
 
 const client = new ApolloClient({
     link: new HttpLink({
@@ -28,6 +29,7 @@ export function mutateRouteSave(routeId) {
             variables: {
                 routeId: routeId,
             },
+            refetchQueries: savedRoutesQuery,
         });
         const result = await request;
         store.dispatch({
@@ -43,6 +45,7 @@ export function mutateRouteUnsave(routeId) {
             variables: {
                 routeId: routeId,
             },
+            refetchQueries: savedRoutesQuery,
         });
         const result = await request;
         store.dispatch({
@@ -58,6 +61,7 @@ export function mutateRouteLike(routeId) {
             variables: {
                 routeId: routeId,
             },
+            refetchQueries: likedRoutesQuery,
         });
         const result = await request;
         store.dispatch({
@@ -73,6 +77,7 @@ export function mutateRouteDislike(routeId) {
             variables: {
                 routeId: routeId,
             },
+            refetchQueries: likedRoutesQuery,
         });
         const result = await request;
         store.dispatch({
