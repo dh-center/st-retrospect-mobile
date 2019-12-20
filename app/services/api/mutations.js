@@ -9,6 +9,15 @@ export const saveRoute = gql`
             savedRoutes {
                 id
                 name
+                description
+                photoLink
+                locations {
+                    id
+                    name
+                    description
+                    coordinateX
+                    coordinateY
+                }
             }
         }
     }
@@ -22,6 +31,15 @@ export const unsaveRoute = gql`
             savedRoutes {
                 id
                 name
+                description
+                photoLink
+                locations {
+                    id
+                    name
+                    description
+                    coordinateX
+                    coordinateY
+                }
             }
         }
     }
@@ -35,6 +53,15 @@ export const likeRoute = gql`
             likedRoutes {
                 id
                 name
+                description
+                photoLink
+                locations {
+                    id
+                    name
+                    description
+                    coordinateX
+                    coordinateY
+                }
             }
         }
     }
@@ -48,6 +75,15 @@ export const dislikeRoute = gql`
             likedRoutes {
                 id
                 name
+                description
+                photoLink
+                locations {
+                    id
+                    name
+                    description
+                    coordinateX
+                    coordinateY
+                }
             }
         }
     }

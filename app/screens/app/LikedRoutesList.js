@@ -9,6 +9,7 @@ import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 import {fetchLikedRoutes} from '../../redux/actions/actions.likedRoutes';
 import {styles} from '../../theme/styles';
+import {connect} from 'react-redux';
 
 class LikedRoutesList extends Component {
     constructor(props) {
@@ -16,25 +17,27 @@ class LikedRoutesList extends Component {
         this.state = {
             authToken: store.getState().authToken,
             locale: store.getState().locale,
-            likedRoutes: store.getState().likedRoutes,
         };
-        store
-            .dispatch(fetchLikedRoutes())
-            .then(() =>
-                this.setState({likedRoutes: store.getState().likedRoutes}),
-            );
+    }
+
+    fetchRoutes() {
+        store.dispatch(fetchLikedRoutes());
+    }
+
+    componentDidMount() {
+        this.fetchRoutes();
     }
 
     render() {
-        if (this.state.likedRoutes.isFetching) {
+        if (this.props.likedRoutes.isFetching) {
             return <Loader />;
         } else {
-            if (this.state.likedRoutes.items.length === 0) {
+            if (this.props.likedRoutes.items.length === 0) {
                 return <Text style={styles.emptyMessage}>{t('no-liked')}</Text>;
             } else {
                 return (
                     <List>
-                        {this.state.likedRoutes.items.map(value => {
+                        {this.props.likedRoutes.items.map(value => {
                             return (
                                 <RouteItem
                                     key={value.id}
@@ -50,4 +53,10 @@ class LikedRoutesList extends Component {
     }
 }
 
-export default withNavigation(LikedRoutesList);
+function mapStateToProps(state, ownProps) {
+    return {
+        likedRoutes: state.likedRoutes,
+    };
+}
+
+export default withNavigation(connect(mapStateToProps)(LikedRoutesList));

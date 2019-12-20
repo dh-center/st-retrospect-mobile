@@ -22,7 +22,7 @@ export function receiveNearRoutes(nearRoutes) {
     return {
         type: RECEIVE_NEAR_ROUTES,
         receivedAt: Date.now(),
-        nearRoutes: nearRoutes,
+        items: nearRoutes,
     };
 }
 

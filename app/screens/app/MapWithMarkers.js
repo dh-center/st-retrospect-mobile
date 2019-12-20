@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {Fab, Icon, View} from 'native-base';
 import {StyleSheet} from 'react-native';
+import Loader from '../../components/common/Loader';
 
 const CurrentLocationMarker = () => {
     return <View style={styles.circle} />;
@@ -121,48 +122,52 @@ export class MapWithMarkers extends Component {
             points.push(<Marker key={i} coordinate={locations[i]} />);
         }
 
-        points.push(
-            <Marker
-                coordinate={{
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
-                }}
-                key={locations.length + 1}>
-                <CurrentLocationMarker />
-            </Marker>,
-        );
-
-        return (
-            <View style={styles.container}>
-                <MapView
-                    provider={PROVIDER_GOOGLE}
-                    initialRegion={{
+        if (this.state.latitude && this.state.longitude) {
+            points.push(
+                <Marker
+                    coordinate={{
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
-                        latitudeDelta: this.state.latitudeDelta,
-                        longitudeDelta: this.state.longitudeDelta,
                     }}
-                    style={styles.map}
-                    ref={ref => (this.map = ref)}>
-                    <MapViewDirections
-                        origin={{
+                    key={locations.length + 1}>
+                    <CurrentLocationMarker />
+                </Marker>,
+            );
+
+            return (
+                <View style={styles.container}>
+                    <MapView
+                        provider={PROVIDER_GOOGLE}
+                        initialRegion={{
                             latitude: this.state.latitude,
                             longitude: this.state.longitude,
+                            latitudeDelta: this.state.latitudeDelta,
+                            longitudeDelta: this.state.longitudeDelta,
                         }}
-                        destination={locations[locations.length - 1]}
-                        waypoints={locations}
-                        apikey={GOOGLE_DIRECTIONS_API_KEY}
-                        strokeWidth={5}
-                        strokeColor="#f6c23d"
-                        mode="WALKING"
-                        resetOnChange={false}
-                    />
-                    {points}
-                </MapView>
-                <this.PlusButton />
-                <this.MinusButton />
-            </View>
-        );
+                        style={styles.map}
+                        ref={ref => (this.map = ref)}>
+                        <MapViewDirections
+                            origin={{
+                                latitude: this.state.latitude,
+                                longitude: this.state.longitude,
+                            }}
+                            destination={locations[locations.length - 1]}
+                            waypoints={locations}
+                            apikey={GOOGLE_DIRECTIONS_API_KEY}
+                            strokeWidth={5}
+                            strokeColor="#f6c23d"
+                            mode="WALKING"
+                            resetOnChange={false}
+                        />
+                        {points}
+                    </MapView>
+                    <this.PlusButton />
+                    <this.MinusButton />
+                </View>
+            );
+        } else {
+            return <Loader />;
+        }
     }
 }
 

@@ -22,7 +22,7 @@ export function receiveSearchedRoutes(searchedRoutes) {
     return {
         type: RECEIVE_SEARCHED_ROUTES,
         receivedAt: Date.now(),
-        searchedRoutes: searchedRoutes,
+        items: searchedRoutes,
     };
 }
 

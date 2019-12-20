@@ -22,7 +22,7 @@ export function receiveLikedRoutes(likedRoutes) {
     return {
         type: RECEIVE_LIKED_ROUTES,
         receivedAt: Date.now(),
-        likedRoutes: likedRoutes,
+        items: likedRoutes,
     };
 }
 

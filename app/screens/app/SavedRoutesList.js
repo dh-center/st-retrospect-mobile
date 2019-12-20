@@ -9,6 +9,7 @@ import Loader from '../../components/common/Loader';
 import {t} from '../../locales/i18n';
 import {fetchSavedRoutes} from '../../redux/actions/actions.savedRoutes';
 import {styles} from '../../theme/styles';
+import {connect} from 'react-redux';
 
 class SavedRoutesList extends Component {
     constructor(props) {
@@ -19,26 +20,26 @@ class SavedRoutesList extends Component {
         };
     }
 
-    refetchRoutes() {
+    fetchRoutes() {
         store.dispatch(fetchSavedRoutes());
     }
 
     componentDidMount() {
-        if (store.getState().savedRoutes.didInvalidate) {
-            this.refetchRoutes();
-        }
+        this.fetchRoutes();
     }
 
     render() {
-        if (store.getState().savedRoutes.isFetching) {
+        console.log(this.props.savedRoutes);
+        console.log(store.getState().savedRoutes);
+        if (this.props.savedRoutes.isFetching) {
             return <Loader />;
         } else {
-            if (store.getState().savedRoutes.items.length === 0) {
+            if (this.props.savedRoutes.items.length === 0) {
                 return <Text style={styles.emptyMessage}>{t('no-saved')}</Text>;
             } else {
                 return (
                     <List>
-                        {store.getState().savedRoutes.items.map(value => {
+                        {this.props.savedRoutes.items.map(value => {
                             return (
                                 <RouteItem
                                     key={value.id}
@@ -54,4 +55,10 @@ class SavedRoutesList extends Component {
     }
 }
 
-export default withNavigation(SavedRoutesList);
+function mapStateToProps(state, ownProps) {
+    return {
+        savedRoutes: state.savedRoutes,
+    };
+}
+
+export default withNavigation(connect(mapStateToProps)(SavedRoutesList));

@@ -22,7 +22,7 @@ export function receiveSavedRoutes(savedRoutes) {
     return {
         type: RECEIVE_SAVED_ROUTES,
         receivedAt: Date.now(),
-        savedRoutes: savedRoutes,
+        items: savedRoutes,
     };
 }
 
