@@ -51,6 +51,7 @@ export default class RouteDescription extends Component {
                 saveButton = (
                     <Button
                         transparent
+                        style={styles.saveButton}
                         onPress={() => this.unsaveRoute(this.state.routeId)}>
                         <Icon name="md-star" />
                     </Button>
@@ -59,6 +60,7 @@ export default class RouteDescription extends Component {
                 saveButton = (
                     <Button
                         transparent
+                        style={styles.saveButton}
                         onPress={() => this.saveRoute(this.state.routeId)}>
                         <Icon name="md-star-outline" />
                     </Button>
@@ -95,7 +97,7 @@ export default class RouteDescription extends Component {
                         active={true}
                         direction="up"
                         position="bottomRight"
-                        style={{backgroundColor: '#f6c23d'}}
+                        style={{backgroundColor: '#f6c23d', bottom: 120}}
                         onPress={() =>
                             this.props.navigation.navigate('RouteNavigation', {
                                 locations: locations,
@@ -117,5 +119,5 @@ const styles = StyleSheet.create({
     locationlist: {
         flex: 1,
     },
-    btnCentered: {width: 100, flexDirection: 'row', justifyContent: 'center'},
+    saveButton: {bottom: 70},
 });
