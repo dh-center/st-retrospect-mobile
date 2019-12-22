@@ -4,7 +4,7 @@ import {Body, Button, H2, Icon, ListItem, Right} from 'native-base';
 import {t} from '../../locales/i18n';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
 import {MapWithMarkers} from './MapWithMarkers';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 
 const DistanceFilter = 3;
 const LatitudeChangeDelta = 0.0001;

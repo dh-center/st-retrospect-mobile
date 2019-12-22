@@ -56,7 +56,6 @@ export class MapWithMarkers extends Component {
                 />,
             );
         }
-        console.log(points);
         this.setState({points: points});
     };
 

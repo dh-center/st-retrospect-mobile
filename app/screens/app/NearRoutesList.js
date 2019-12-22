@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withNavigation} from 'react-navigation';
 import {List} from 'native-base';
 import {Text} from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 
 import RouteItem from './RouteItem';
 import {store} from '../../redux/store';
