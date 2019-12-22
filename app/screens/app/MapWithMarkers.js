@@ -2,9 +2,10 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
 import React, {Component} from 'react';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import {Fab, Icon, View} from 'native-base';
 import {StyleSheet} from 'react-native';
+import {store} from '../../redux/store';
 import Loader from '../../components/common/Loader';
 
 const CurrentLocationMarker = () => {
@@ -22,8 +23,8 @@ export class MapWithMarkers extends Component {
             longitude: 0,
             latitudeDelta: this.props.deltas.latitudeDelta,
             longitudeDelta: this.props.deltas.longitudeDelta,
+            points: [],
         };
-        this.findCoordinates();
     }
 
     findCoordinates = () => {
@@ -35,8 +36,28 @@ export class MapWithMarkers extends Component {
                 });
             },
             error => console.log(error.message),
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+            {enableHighAccuracy: true},
         );
+    };
+
+    findPoints = () => {
+        let points = [];
+        const locations = this.props.locations;
+
+        for (let i = 0; i < locations.length; i++) {
+            points.push(
+                <Marker
+                    key={i}
+                    coordinate={locations[i]}
+                    pinColor={'#f6c23d'}
+                    tracksViewChanges={false}
+                    title={locations[i].name[store.getState().locale]}
+                    description={locations[i].description}
+                />,
+            );
+        }
+        console.log(points);
+        this.setState({points: points});
     };
 
     componentDidMount = () => {
@@ -55,6 +76,8 @@ export class MapWithMarkers extends Component {
                 distanceFilter: DistanceFilter,
             },
         );
+        this.findCoordinates();
+        this.findPoints();
     };
 
     componentWillUnmount = () => {
@@ -115,25 +138,13 @@ export class MapWithMarkers extends Component {
     };
 
     render() {
-        let points = [];
         const locations = this.props.locations;
 
-        for (let i = 0; i < locations.length; i++) {
-            points.push(<Marker key={i} coordinate={locations[i]} />);
-        }
-
-        if (this.state.latitude && this.state.longitude) {
-            points.push(
-                <Marker
-                    coordinate={{
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
-                    }}
-                    key={locations.length + 1}>
-                    <CurrentLocationMarker />
-                </Marker>,
-            );
-
+        if (
+            this.state.latitude &&
+            this.state.longitude &&
+            this.state.points.length !== 0
+        ) {
             return (
                 <View style={styles.container}>
                     <MapView
@@ -159,7 +170,15 @@ export class MapWithMarkers extends Component {
                             mode="WALKING"
                             resetOnChange={false}
                         />
-                        {points}
+                        {this.state.points}
+                        <Marker
+                            coordinate={{
+                                latitude: this.state.latitude,
+                                longitude: this.state.longitude,
+                            }}
+                            key={locations.length + 1}>
+                            <CurrentLocationMarker />
+                        </Marker>
                     </MapView>
                     <this.PlusButton />
                     <this.MinusButton />
