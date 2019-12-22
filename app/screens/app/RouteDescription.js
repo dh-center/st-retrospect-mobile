@@ -7,10 +7,6 @@ import {
     mutateRouteSave,
     mutateRouteUnsave,
 } from '../../redux/actions/actions.mutateRoute';
-import {
-    fetchSavedRoutes,
-    INVALIDATE_SAVED_ROUTES,
-} from '../../redux/actions/actions.savedRoutes';
 
 export default class RouteDescription extends Component {
     constructor(props) {
@@ -24,6 +20,9 @@ export default class RouteDescription extends Component {
             isSaved: this.defineIsSaved(routeId),
             routeId: routeId,
         };
+
+        this.saveRoute = this.saveRoute.bind(this);
+        this.unsaveRoute = this.unsaveRoute.bind(this);
     }
 
     defineIsSaved(routeId) {
@@ -32,12 +31,14 @@ export default class RouteDescription extends Component {
         return filteredRoutes.length !== 0;
     }
 
-    saveRoute(routeId) {
+    saveRoute() {
+        const routeId = this.state.routeId;
         store.dispatch(mutateRouteSave(routeId));
         this.setState({isSaved: true});
     }
 
-    unsaveRoute(routeId) {
+    unsaveRoute() {
+        const routeId = this.state.routeId;
         store.dispatch(mutateRouteUnsave(routeId));
         this.setState({isSaved: false});
     }
@@ -52,7 +53,7 @@ export default class RouteDescription extends Component {
                     <Button
                         transparent
                         style={styles.saveButton}
-                        onPress={() => this.unsaveRoute(this.state.routeId)}>
+                        onPress={this.unsaveRoute}>
                         <Icon name="md-star" />
                     </Button>
                 );
@@ -61,7 +62,7 @@ export default class RouteDescription extends Component {
                     <Button
                         transparent
                         style={styles.saveButton}
-                        onPress={() => this.saveRoute(this.state.routeId)}>
+                        onPress={this.saveRoute}>
                         <Icon name="md-star-outline" />
                     </Button>
                 );
