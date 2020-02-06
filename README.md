@@ -1,4 +1,5 @@
 # st-retrospect-mobile
+![Node.js CI](https://github.com/dh-center/st-retrospect-mobile/workflows/Node.js%20CI/badge.svg?branch=master&event=push)
 
 Mobile navigation app that offers routes you will like.
 
@@ -21,4 +22,3 @@ Refer to [React Native docs](https://facebook.github.io/react-native/docs/gettin
 
 - Run app on emulator/device
 `react-native run-android`
-
