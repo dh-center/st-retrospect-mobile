@@ -1,31 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, H3, Icon} from 'native-base';
-import {likeRoute} from '../../services/api/mutations';
-import Loader from '../../components/common/Loader';
-import {useMutation} from '@apollo/react-hooks';
-import {ApolloProvider} from 'react-apollo';
-import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
-import {routesUrl} from '../../services/api/endpoints';
 import {store} from '../../redux/store';
 import {
     mutateRouteDislike,
     mutateRouteLike,
 } from '../../redux/actions/actions.mutateRoute';
 import {fetchLikedRoutes} from '../../redux/actions/actions.likedRoutes';
-
-const LikeButton = ({routeId}) => {
-    const [toggleLike, {loading}] = useMutation(likeRoute, {
-        variables: {routeId: routeId},
-    });
-
-    if (loading) return <Loader />;
-    return (
-        <Button transparent onPress={toggleLike}>
-            <Icon name="md-heart-empty" />
-        </Button>
-    );
-};
 
 export default class RouteFinish extends Component {
     constructor(props) {

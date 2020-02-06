@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Alert} from 'react-native';
 import {Body, Button, H2, Icon, ListItem, Right} from 'native-base';
 import {t} from '../../locales/i18n';
-import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
 import {MapWithMarkers} from './MapWithMarkers';
 import Geolocation from 'react-native-geolocation-service';
 
