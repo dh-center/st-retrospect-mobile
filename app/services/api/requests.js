@@ -13,7 +13,7 @@ export function sendSignUpRequest(username, password) {
         }),
     })
         .then(response => {
-            if (response.status == 201) {
+            if (response.status === 201) {
                 return 'OK';
             } else {
                 return 'Err';
@@ -32,7 +32,7 @@ export function sendLogInRequest(username, password) {
 
     return fetch(parmsUrl)
         .then(response => {
-            if (response.status == 200) {
+            if (response.status === 200) {
                 return response.json();
             } else {
                 return 'Err';

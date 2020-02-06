@@ -42,7 +42,7 @@ export default class SignUpForm extends Component {
         const {username, password} = this.state;
         if (username && password) {
             sendLogInRequest(username, password).then(result => {
-                if (result == 'Err') {
+                if (result === 'Err') {
                     alert('Credentials are incorrect. Please try again.');
                 } else {
                     store.dispatch({

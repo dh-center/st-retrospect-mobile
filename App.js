@@ -27,7 +27,7 @@ class App extends React.Component {
 
     handleLocalizationChange = () => {
         setI18nConfig();
-        store.dispatch({type: SET_LOCALE, locale: i18n.locale});
+        store.dispatch({type: 'SET_LOCALE', locale: i18n.locale});
         this.forceUpdate();
     };
     render() {

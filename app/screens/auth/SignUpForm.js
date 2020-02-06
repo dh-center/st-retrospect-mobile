@@ -41,11 +41,11 @@ export default class SignUpForm extends Component {
     }
     onSignUp() {
         const {username, password, passwordCheck} = this.state;
-        if (username && password && password == passwordCheck) {
+        if (username && password && password === passwordCheck) {
             sendSignUpRequest(username, password).then(status => {
-                if (status == 'Err') {
+                if (status === 'Err') {
                     alert('User already exists. Please try again.');
-                } else if (status == 'OK') {
+                } else if (status === 'OK') {
                     sendLogInRequest(username, password).then(result => {
                         store.dispatch({
                             type: 'SAVE_AUTH_TOKEN',
