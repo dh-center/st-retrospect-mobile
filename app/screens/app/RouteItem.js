@@ -10,7 +10,6 @@ class RouteItem extends Component {
 
         this.state = {
             authToken: store.getState().authToken,
-            locale: store.getState().locale,
         };
     }
 
@@ -21,10 +20,8 @@ class RouteItem extends Component {
             locations.push({
                 latitude: this.props.data.locations[i].coordinateX,
                 longitude: this.props.data.locations[i].coordinateY,
-                name: this.props.data.locations[i].name[this.state.locale],
-                description: this.props.data.locations[i].description[
-                    this.state.locale
-                ],
+                name: this.props.data.locations[i].name,
+                description: this.props.data.locations[i].description,
             });
         }
 
@@ -35,20 +32,18 @@ class RouteItem extends Component {
                 onPress={() => {
                     this.props.navigation.navigate('RouteDescription', {
                         routeId: this.props.data.id,
-                        name: this.props.data.name[this.state.locale],
+                        name: this.props.data.name,
                         locations: locations,
-                        description: this.props.data.description[
-                            this.state.locale
-                        ],
+                        description: this.props.data.description,
                     });
                 }}>
                 <Left>
                     <Thumbnail source={{uri: this.props.data.photoLink}} />
                 </Left>
                 <Body>
-                    <H3>{this.props.data.name[this.state.locale]}</H3>
+                    <H3>{this.props.data.name}</H3>
                     <Text numberOfLines={2} note>
-                        {this.props.data.description[this.state.locale]}
+                        {this.props.data.description}
                     </Text>
                 </Body>
             </ListItem>
