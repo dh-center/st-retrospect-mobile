@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
@@ -108,7 +108,14 @@ export class MapWithMarkers extends Component {
                     key={i}
                     coordinate={location}
                     title={location.name}
-                    description={location.description}
+                    onCalloutPress={() =>
+                        Alert.alert(location.name, location.description, [
+                            {
+                                text: 'Back',
+                                style: 'cancel',
+                            },
+                        ])
+                    }
                 />
             );
         });
