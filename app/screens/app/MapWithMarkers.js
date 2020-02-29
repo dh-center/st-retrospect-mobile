@@ -12,6 +12,8 @@ import MinusButton from '../../components/map/MinusButton';
 import PlusButton from '../../components/map/PlusButton';
 import LocationMarker from '../../components/map/LocationMarker';
 import Route from '../../components/map/Route';
+import {setDeviceLocation} from '../../redux/actions/actions.location';
+import {store} from '../../redux/store';
 
 const LatitudeChangeDelta = 1.5;
 const DistanceFilter = 3;
@@ -22,8 +24,6 @@ export class MapWithMarkers extends Component {
         super(props);
 
         this.state = {
-            latitude: null,
-            longitude: null,
             latitudeDelta: this.props.deltas.latitudeDelta,
             longitudeDelta: this.props.deltas.longitudeDelta,
         };
@@ -41,10 +41,13 @@ export class MapWithMarkers extends Component {
     }
 
     getCurrentLocation() {
-        if (this.state.latitude && this.state.longitude) {
+        if (
+            store.getState().currentLocation.latitude &&
+            store.getState().currentLocation.longitude
+        ) {
             return {
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
+                latitude: store.getState().currentLocation.latitude,
+                longitude: store.getState().currentLocation.longitude,
             };
         }
         return null;
@@ -53,10 +56,12 @@ export class MapWithMarkers extends Component {
     setWatchLocation() {
         this.watchID = Geolocation.watchPosition(
             position => {
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                });
+                store.dispatch(
+                    setDeviceLocation(
+                        position.coords.latitude,
+                        position.coords.longitude,
+                    ),
+                );
             },
             error => console.log(error),
             {
@@ -81,8 +86,9 @@ export class MapWithMarkers extends Component {
                     <MapView
                         provider={PROVIDER_GOOGLE}
                         initialRegion={{
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
+                            latitude: store.getState().currentLocation.latitude,
+                            longitude: store.getState().currentLocation
+                                .longitude,
                             latitudeDelta: this.state.latitudeDelta,
                             longitudeDelta: this.state.longitudeDelta,
                         }}
@@ -139,8 +145,8 @@ export class MapWithMarkers extends Component {
 
     onPressZoomIn() {
         const region = {
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
+            latitude: store.getState().currentLocation.latitude,
+            longitude: store.getState().currentLocation.longitude,
             latitudeDelta: this.state.latitudeDelta / LatitudeChangeDelta,
             longitudeDelta: this.state.longitudeDelta / LatitudeChangeDelta,
         };
@@ -150,8 +156,8 @@ export class MapWithMarkers extends Component {
 
     onPressZoomOut() {
         const region = {
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
+            latitude: store.getState().currentLocation.latitude,
+            longitude: store.getState().currentLocation.longitude,
             latitudeDelta: this.state.latitudeDelta * LatitudeChangeDelta,
             longitudeDelta: this.state.longitudeDelta * LatitudeChangeDelta,
         };

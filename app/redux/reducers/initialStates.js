@@ -13,3 +13,5 @@ export const routesListInitialState = {
 export const localeInitialState = i18n.locale;
 
 export const authTokenInitialState = '';
+
+export const locationInitialState = {latitude: null, longitude: null};

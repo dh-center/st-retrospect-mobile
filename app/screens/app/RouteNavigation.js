@@ -3,9 +3,8 @@ import {StyleSheet, Text, View, Alert} from 'react-native';
 import {Body, Button, H2, Icon, ListItem, Right} from 'native-base';
 import {t} from '../../locales/i18n';
 import {MapWithMarkers} from './MapWithMarkers';
-import Geolocation from 'react-native-geolocation-service';
+import {store} from '../../redux/store';
 
-const DistanceFilter = 3;
 const LatitudeChangeDelta = 0.0001;
 const LongitudeChangeDelta = 0.0001;
 
@@ -15,24 +14,8 @@ export default class RouteNavigation extends Component {
         this.state = {
             nextLocationIndex: 0,
             locations: this.props.navigation.getParam('locations'),
-            latitude: null,
-            longitude: null,
         };
-        this.findCoordinates();
     }
-
-    findCoordinates = () => {
-        Geolocation.getCurrentPosition(
-            position => {
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                });
-            },
-            error => console.log(error.message),
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-        );
-    };
 
     getNextLocation() {
         return this.state.locations[this.state.nextLocationIndex];
@@ -59,10 +42,10 @@ export default class RouteNavigation extends Component {
 
     updateNextLocation = () => {
         let curLatitudeDelta = Math.abs(
-            this.getNextLocation().latitude - this.state.latitude,
+            this.getNextLocation().latitude - store.getState().latitude,
         );
         let curLongitudeDelta = Math.abs(
-            this.getNextLocation().longitude - this.state.longitude,
+            this.getNextLocation().longitude - store.getState().longitude,
         );
 
         if (
@@ -78,29 +61,6 @@ export default class RouteNavigation extends Component {
                 });
             }
         }
-    };
-
-    componentDidMount = () => {
-        this.watchID = Geolocation.watchPosition(
-            position => {
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                });
-                this.updateNextLocation();
-            },
-            error => console.log(error),
-            {
-                enableHighAccuracy: true,
-                timeout: 250,
-                maximumAge: 20,
-                distanceFilter: DistanceFilter,
-            },
-        );
-    };
-
-    componentWillUnmount = () => {
-        Geolocation.clearWatch(this.watchID);
     };
 
     render() {

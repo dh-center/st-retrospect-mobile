@@ -6,6 +6,7 @@ import {savedRoutes} from './reducers.savedRoutes';
 import {likedRoutes} from './reducers.likedRoutes';
 import {nearRoutes} from './reducers.nearRoutes';
 import {searchedRoutes} from './reducers.searchedRoutes';
+import {currentLocation} from './reducers.location';
 import {LOGOUT} from '../actions/actions.auth';
 
 const appReducer = combineReducers({
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
     likedRoutes,
     nearRoutes,
     searchedRoutes,
+    currentLocation,
 });
 
 const appFlow = (state, action) => {
