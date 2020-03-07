@@ -3,7 +3,6 @@ import {Alert, StyleSheet} from 'react-native';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {GOOGLE_DIRECTIONS_API_KEY} from 'react-native-dotenv';
-import Geolocation from 'react-native-geolocation-service';
 import {View} from 'native-base';
 
 import Loader from '../../components/common/Loader';
@@ -12,11 +11,9 @@ import MinusButton from '../../components/map/MinusButton';
 import PlusButton from '../../components/map/PlusButton';
 import LocationMarker from '../../components/map/LocationMarker';
 import Route from '../../components/map/Route';
-import {setDeviceLocation} from '../../redux/actions/actions.location';
 import {store} from '../../redux/store';
 
 const LatitudeChangeDelta = 1.5;
-const DistanceFilter = 3;
 const RouteMode = 'WALKING';
 
 export class MapWithMarkers extends Component {
@@ -32,14 +29,6 @@ export class MapWithMarkers extends Component {
         this.onPressZoomIn = this.onPressZoomIn.bind(this);
     }
 
-    componentDidMount() {
-        this.setWatchLocation();
-    }
-
-    componentWillUnmount() {
-        this.clearWatchLocation();
-    }
-
     getCurrentLocation() {
         if (
             store.getState().currentLocation.latitude &&
@@ -51,30 +40,6 @@ export class MapWithMarkers extends Component {
             };
         }
         return null;
-    }
-
-    setWatchLocation() {
-        this.watchID = Geolocation.watchPosition(
-            position => {
-                store.dispatch(
-                    setDeviceLocation(
-                        position.coords.latitude,
-                        position.coords.longitude,
-                    ),
-                );
-            },
-            error => console.log(error),
-            {
-                enableHighAccuracy: true,
-                timeout: 250,
-                maximumAge: 20,
-                distanceFilter: DistanceFilter,
-            },
-        );
-    }
-
-    clearWatchLocation() {
-        Geolocation.clearWatch(this.watchID);
     }
 
     render() {

@@ -5,7 +5,7 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import SearchBar from '../components/navigation/SearchBar';
 
 import LogOut from '../screens/auth/LogOut';
-import AuthLoadingScreen from '../screens/loading/AuthLoadingScreen';
+import LoadingScreen from '../screens/loading/LoadingScreen';
 
 import {AuthStack} from './auth';
 import {RoutesScreen} from './routes';
@@ -28,7 +28,7 @@ const AppModalStack = createStackNavigator(
 export const AppContainer = createAppContainer(
     createSwitchNavigator({
         Loading: {
-            screen: AuthLoadingScreen,
+            screen: LoadingScreen,
         },
         Auth: {
             screen: AuthStack,
