@@ -7,11 +7,14 @@ export const routesQuery = gql`
             name
             description
             photoLink
-            locations {
+            locationsInstance {
                 id
                 name
-                coordinateX
-                coordinateY
+                description
+                location {
+                    coordinateX
+                    coordinateY
+                }
             }
         }
     }
@@ -27,12 +30,14 @@ export const nearRoutesQuery = gql`
             name
             description
             photoLink
-            locations {
+            locationsInstance {
                 id
                 name
                 description
-                coordinateX
-                coordinateY
+                location {
+                    coordinateX
+                    coordinateY
+                }
             }
         }
     }
@@ -46,12 +51,14 @@ export const savedRoutesQuery = gql`
                 name
                 description
                 photoLink
-                locations {
+                locationsInstance {
                     id
                     name
                     description
-                    coordinateX
-                    coordinateY
+                    location {
+                        coordinateX
+                        coordinateY
+                    }
                 }
             }
         }
@@ -66,12 +73,14 @@ export const likedRoutesQuery = gql`
                 name
                 description
                 photoLink
-                locations {
+                locationsInstance {
                     id
                     name
                     description
-                    coordinateX
-                    coordinateY
+                    location {
+                        coordinateX
+                        coordinateY
+                    }
                 }
             }
         }
@@ -85,12 +94,14 @@ export const searchRoutesQuery = gql`
             name
             description
             photoLink
-            locations {
+            locationsInstance {
                 id
                 name
                 description
-                coordinateX
-                coordinateY
+                location {
+                    coordinateX
+                    coordinateY
+                }
             }
         }
     }

@@ -16,12 +16,14 @@ class RouteItem extends Component {
     render() {
         let locations = [];
 
-        for (let i = 0; i < this.props.data.locations.length; i++) {
+        for (let i = 0; i < this.props.data.locationsInstance.length; i++) {
             locations.push({
-                latitude: this.props.data.locations[i].coordinateX,
-                longitude: this.props.data.locations[i].coordinateY,
-                name: this.props.data.locations[i].name,
-                description: this.props.data.locations[i].description,
+                latitude: this.props.data.locationsInstance[i].location
+                    .coordinateX,
+                longitude: this.props.data.locationsInstance[i].location
+                    .coordinateY,
+                name: this.props.data.locationsInstance[i].name,
+                description: this.props.data.locationsInstance[i].description,
             });
         }
 
