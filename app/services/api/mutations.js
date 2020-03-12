@@ -10,12 +10,14 @@ export const saveRoute = gql`
                 name
                 description
                 photoLink
-                locations {
+                locationsInstance {
                     id
                     name
                     description
-                    coordinateX
-                    coordinateY
+                    location {
+                        coordinateX
+                        coordinateY
+                    }
                 }
             }
         }
@@ -32,12 +34,14 @@ export const unsaveRoute = gql`
                 name
                 description
                 photoLink
-                locations {
+                locationsInstance {
                     id
                     name
                     description
-                    coordinateX
-                    coordinateY
+                    location {
+                        coordinateX
+                        coordinateY
+                    }
                 }
             }
         }
@@ -54,12 +58,14 @@ export const likeRoute = gql`
                 name
                 description
                 photoLink
-                locations {
+                locationsInstance {
                     id
                     name
                     description
-                    coordinateX
-                    coordinateY
+                    location {
+                        coordinateX
+                        coordinateY
+                    }
                 }
             }
         }
@@ -76,12 +82,14 @@ export const dislikeRoute = gql`
                 name
                 description
                 photoLink
-                locations {
+                locationsInstance {
                     id
                     name
                     description
-                    coordinateX
-                    coordinateY
+                    location {
+                        coordinateX
+                        coordinateY
+                    }
                 }
             }
         }
